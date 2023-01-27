@@ -102,7 +102,6 @@ module.exports.remove = async(req, res) => {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:delete`)
     res.status(status).json({ message, entity: ENTITY_NAME })
   }
-
 };
 
 

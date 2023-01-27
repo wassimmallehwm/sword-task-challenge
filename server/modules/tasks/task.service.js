@@ -24,8 +24,8 @@ class TaskService {
     create = async (data, createdBy) => {
         try {
             if (
-                this.nullOrEmpty(data.label) ||
-                this.nullOrEmpty(data.description) ||
+                this.nullOrEmpty(data.title) ||
+                this.nullOrEmpty(data.summary) ||
                 this.nullOrEmpty(createdBy)
             )
                 return new ResponseError({
@@ -82,7 +82,7 @@ class TaskService {
         try {
             let filter = {}
             if (search && search.trim() !== "") {
-                filter = { label: { $regex: search, $options: 'i' } }
+                filter = { title: { $regex: search, $options: 'i' } }
             }
             const total = await Task.find(filter)
                 .count()
@@ -152,6 +152,12 @@ class TaskService {
                     status: 404,
                     message: "Task not found !"
                 })
+            if (task.createdBy != req.user._id)
+                return new ResponseError({
+                    status: 403,
+                    message: "Permission denied !"
+                })
+
             let result = await Task.findOneAndUpdate({ _id: id }, data, { new: true });
             result = await result
                 .populate({

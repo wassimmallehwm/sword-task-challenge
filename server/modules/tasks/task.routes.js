@@ -4,15 +4,15 @@ const { create, getAll, list, getById, update, remove } = require('./task.contro
 
 router.post('/', authenticated, create);
 
-router.get('/', getAll);
+router.get('/', authenticated, getAll);
 
-router.get('/list', list);
+router.get('/list', authenticated, list);
 
-router.get('/:id', getById);
+router.get('/:id', authenticated, getById);
 
-router.put('/:id', update);
+router.put('/:id', authenticated, update);
 
-router.delete('/:id', remove);
+router.delete('/:id', authenticated, remove);
 
 
 module.exports = router;

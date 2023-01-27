@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const TaskSchema = new mongoose.Schema({
-    label: {
+    title: {
         type: String,
         required: true,
     },
-    description: {
+    summary: {
         type: String,
         required: true,
     },
