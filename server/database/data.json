@@ -1,0 +1,122 @@
+[
+    {
+        "username": "manager01",
+        "email": "manager01@mail.com",
+        "firstname": "manager01",
+        "lastname": "manager01",
+        "password": "manager01",
+        "role": "Manager"
+    },
+    {
+        "username": "manager02",
+        "email": "manager02@mail.com",
+        "firstname": "manager02",
+        "lastname": "manager02",
+        "password": "manager02",
+        "role": "Manager"
+    },
+    {
+        "username": "manager03",
+        "email": "manager03@mail.com",
+        "firstname": "manager03",
+        "lastname": "manager03",
+        "password": "manager03",
+        "role": "Manager"
+    },
+    {
+        "username": "manager04",
+        "email": "manager04@mail.com",
+        "firstname": "manager04",
+        "lastname": "manager04",
+        "password": "manager04",
+        "role": "Manager"
+    },
+    {
+        "username": "manager05",
+        "email": "manager05@mail.com",
+        "firstname": "manager05",
+        "lastname": "manager05",
+        "password": "manager05",
+        "role": "Manager"
+    },
+    {
+        "username": "technician01",
+        "email": "technician01@mail.com",
+        "firstname": "technician01",
+        "lastname": "technician01",
+        "password": "technician01",
+        "role": "Technician"
+    },
+    {
+        "username": "technician02",
+        "email": "technician02@mail.com",
+        "firstname": "technician02",
+        "lastname": "technician02",
+        "password": "technician02",
+        "role": "Technician"
+    },
+    {
+        "username": "technician03",
+        "email": "technician03@mail.com",
+        "firstname": "technician03",
+        "lastname": "technician03",
+        "password": "technician03",
+        "role": "Technician"
+    },
+    {
+        "username": "technician04",
+        "email": "technician04@mail.com",
+        "firstname": "technician04",
+        "lastname": "technician04",
+        "password": "technician04",
+        "role": "Technician"
+    },
+    {
+        "username": "technician05",
+        "email": "technician05@mail.com",
+        "firstname": "technician05",
+        "lastname": "technician05",
+        "password": "technician05",
+        "role": "Technician"
+    },
+    {
+        "username": "technician06",
+        "email": "technician06@mail.com",
+        "firstname": "technician06",
+        "lastname": "technician06",
+        "password": "technician06",
+        "role": "Technician"
+    },
+    {
+        "username": "technician07",
+        "email": "technician07@mail.com",
+        "firstname": "technician07",
+        "lastname": "technician07",
+        "password": "technician07",
+        "role": "Technician"
+    },
+    {
+        "username": "technician08",
+        "email": "technician08@mail.com",
+        "firstname": "technician08",
+        "lastname": "technician08",
+        "password": "technician08",
+        "role": "Technician"
+    },
+    {
+        "username": "technician09",
+        "email": "technician09@mail.com",
+        "firstname": "technician09",
+        "lastname": "technician09",
+        "password": "technician09",
+        "role": "Technician"
+    },
+    {
+        "username": "technician10",
+        "email": "technician10@mail.com",
+        "firstname": "technician10",
+        "lastname": "technician10",
+        "password": "technician10",
+        "role": "Technician"
+    }
+]
