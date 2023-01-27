@@ -5,6 +5,7 @@ const { app } = require("../app");
 
 require("dotenv").config();
 let cookies = null
+const date = new Date()
 
 beforeEach(async () => {
     await mongoose.connect(DATABASE_URL);
@@ -28,6 +29,19 @@ describe("Authenticate user", () => {
     });
 });
 
+// describe("Create task", () => {
+//     it("should create task", async () => {
+//         const res = await request(app).post("/api/tasks")
+//             .set('Cookie', cookies)
+//             .send({
+//                 title: `Task_${date.getTime()}`,
+//                 summary: `Task summary ${date.getTime()}`
+//             })
+//             expect(res.statusCode).toBe(201);
+//             expect(res.body != null);
+//     });
+// });
+
 describe("Unauthorized user create task", () => {
     it("should return bad request", async () => {
         const res = await request(app).post("/api/tasks")
@@ -39,6 +53,7 @@ describe("Unauthorized user create task", () => {
     });
 });
 
+
 describe("Update task with invalid id param", () => {
     it("should return task not found", async () => {
         const res = await request(app).put("/api/tasks/")
@@ -48,6 +63,18 @@ describe("Update task with invalid id param", () => {
                 summary: "My first task's summary"
             })
         expect(res.statusCode).toBe(404);
+    });
+});
+
+describe("Update task with invalid permissions", () => {
+    it("should return permission denied", async () => {
+        const res = await request(app).put("/api/tasks/63d43385acd6d0a2adebe3c4")
+            .set('Cookie', cookies)
+            .send({
+                title: 'Task updated',
+                summary: "Task's summary updated"
+            })
+        expect(res.statusCode).toBe(403);
     });
 });
 

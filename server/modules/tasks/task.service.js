@@ -1,6 +1,7 @@
 const Task = require("./task.model");
 const { ResponseSuccess, ResponseError } = require("../../shared/response");
 const { ErrorsHandler } = require("../../utils");
+const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
 const SERVICE_NAME = "TaskService"
 
 class TaskService {
@@ -44,7 +45,7 @@ class TaskService {
                 });
             if (result) {
                 return new ResponseSuccess({
-                    status: 200,
+                    status: 201,
                     content: result
                 })
             }
@@ -54,8 +55,11 @@ class TaskService {
         }
     }
 
-    findAll = async (query) => {
+    findAll = async (query, user) => {
         try {
+            if(!isManager(user)){
+                query.createdBy = user._id
+            }
             const result = await Task.find(query)
                 .populate({
                     path: 'createdBy',
@@ -78,11 +82,17 @@ class TaskService {
         }
     }
 
-    findAllPaginated = async ({ page, limit, sortField, sortOrder, search }) => {
+    findAllPaginated = async (
+        { page, limit, sortField, sortOrder, search },
+        user
+        ) => {
         try {
             let filter = {}
             if (search && search.trim() !== "") {
                 filter = { title: { $regex: search, $options: 'i' } }
+            }
+            if(!isManager(user)){
+                filter.createdBy = user._id
             }
             const total = await Task.find(filter)
                 .count()
@@ -120,9 +130,13 @@ class TaskService {
         }
     }
 
-    findById = async (id) => {
+    findById = async (id, user) => {
         try {
-            const result = await Task.findById(id)
+            let filter = { _id: id }
+            if(!isManager(user)){
+                filter.createdBy = user._id
+            }
+            const result = await Task.findById(filter)
                 .populate({
                     path: 'createdBy',
                     model: 'User',
@@ -144,7 +158,7 @@ class TaskService {
         }
     }
 
-    update = async (id, data) => {
+    update = async (id, data, user) => {
         try {
             const task = await Task.findById(id)
             if (!task)
@@ -152,7 +166,7 @@ class TaskService {
                     status: 404,
                     message: "Task not found !"
                 })
-            if (task.createdBy != req.user._id)
+            if (task.createdBy != user._id)
                 return new ResponseError({
                     status: 403,
                     message: "Permission denied !"
@@ -175,13 +189,18 @@ class TaskService {
         }
     }
 
-    delete = async (id) => {
+    delete = async (id, user) => {
         try {
             const task = await Task.findById(id)
             if (!task)
                 return new ResponseError({
                     status: 404,
                     message: "Task not found !"
+                })
+            if (task.createdBy != user._id)
+                return new ResponseError({
+                    status: 403,
+                    message: "Permission denied !"
                 })
             const result = await Task.deleteOne({ _id: id });
 

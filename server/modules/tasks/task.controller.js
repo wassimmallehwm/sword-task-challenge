@@ -26,7 +26,7 @@ module.exports.getAll = async(req, res) => {
       status,
       content,
       message
-    } = await TaskService.findAll(query)
+    } = await TaskService.findAll(query, req.user)
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:getAll`)
@@ -48,7 +48,7 @@ module.exports.list = async(req, res) => {
       sortField,
       sortOrder,
       search
-    })
+    }, req.user)
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:list`)
@@ -64,7 +64,7 @@ module.exports.getById = async(req, res) => {
       status,
       content,
       message
-    } = await TaskService.findById(id)
+    } = await TaskService.findById(id, req.user)
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:getById`)
@@ -79,7 +79,7 @@ module.exports.update = async(req, res) => {
       status,
       content,
       message
-    } = await TaskService.update(req.params.id, req.body)
+    } = await TaskService.update(req.params.id, req.body, req.user)
 
     res.status(status).json(success ? content : { message });
   } catch (err) {
@@ -95,7 +95,7 @@ module.exports.remove = async(req, res) => {
       status,
       content,
       message
-    } = await TaskService.delete(req.params.id)
+    } = await TaskService.delete(req.params.id, req.user)
 
     res.status(status).json(success ? content : { message });
   } catch (err) {
