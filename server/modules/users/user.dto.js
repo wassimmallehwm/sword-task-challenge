@@ -8,7 +8,7 @@ module.exports = class UserDto {
         role,
         createdAt
     }) {
-        this._id = _id;
+        this.id = _id;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
