@@ -35,7 +35,9 @@ describe("Authenticate user", () => {
 //             .set('Cookie', cookies)
 //             .send({
 //                 title: `Task_${date.getTime()}`,
-//                 summary: `Task summary ${date.getTime()}`
+//                 summary: `Task summary ${date.getTime()}`,
+//                 isPerformed: true,
+//                 performedAt: new Date()
 //             })
 //             expect(res.statusCode).toBe(201);
 //             expect(res.body != null);

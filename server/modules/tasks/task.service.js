@@ -1,7 +1,9 @@
 const Task = require("./task.model");
 const { ResponseSuccess, ResponseError } = require("../../shared/response");
 const { ErrorsHandler } = require("../../utils");
+const MessageBroker = require('../../config/MessageBroker')
 const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
+const { NOTIFICATION_QUEUE } = require("../../constants");
 const SERVICE_NAME = "TaskService"
 
 class TaskService {
@@ -43,6 +45,7 @@ class TaskService {
                     model: 'User',
                     select: 'email username firstname lastname role'
                 });
+            this.sendNotificationToManager(result)
             if (result) {
                 return new ResponseSuccess({
                     status: 201,
@@ -57,7 +60,7 @@ class TaskService {
 
     findAll = async (query, user) => {
         try {
-            if(!isManager(user)){
+            if (!isManager(user)) {
                 query.createdBy = user._id
             }
             const result = await Task.find(query)
@@ -85,13 +88,13 @@ class TaskService {
     findAllPaginated = async (
         { page, limit, sortField, sortOrder, search },
         user
-        ) => {
+    ) => {
         try {
             let filter = {}
             if (search && search.trim() !== "") {
                 filter = { title: { $regex: search, $options: 'i' } }
             }
-            if(!isManager(user)){
+            if (!isManager(user)) {
                 filter.createdBy = user._id
             }
             const total = await Task.find(filter)
@@ -133,7 +136,7 @@ class TaskService {
     findById = async (id, user) => {
         try {
             let filter = { _id: id }
-            if(!isManager(user)){
+            if (!isManager(user)) {
                 filter.createdBy = user._id
             }
             const result = await Task.findById(filter)
@@ -171,6 +174,11 @@ class TaskService {
                     status: 403,
                     message: "Permission denied !"
                 })
+            if (task.isPerformed)
+                return new ResponseError({
+                    status: 400,
+                    message: "Task already performed !"
+                })
 
             let result = await Task.findOneAndUpdate({ _id: id }, data, { new: true });
             result = await result
@@ -179,7 +187,7 @@ class TaskService {
                     model: 'User',
                     select: 'email username firstname lastname role'
                 });
-
+            this.sendNotificationToManager(result)
             return new ResponseSuccess({
                 status: 200,
                 content: result
@@ -215,6 +223,16 @@ class TaskService {
 
     nullOrEmpty = (data) => {
         return !data || data.trim() == ""
+    }
+
+    sendNotificationToManager = (task) => {
+        if (task.isPerformed) {
+            MessageBroker.sendMessage(NOTIFICATION_QUEUE, {
+                title: task.title,
+                performer: task.createdBy,
+                date: task.performedAt
+            })
+        }
     }
 }
 

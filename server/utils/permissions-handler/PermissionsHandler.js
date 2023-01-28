@@ -1,7 +1,7 @@
+const { MANAGER, TECHNICIAN } = require("../../constants");
+
 class PermissionsHandler {
     instance;
-    MANAGER = "Manager"
-    TECHNICIAN = "Technician"
 
     constructor() {
     }
@@ -18,11 +18,11 @@ class PermissionsHandler {
     }
 
     isManager = (user) => {
-        return user && user.role && user.role == this.MANAGER;
+        return user && user.role && user.role == MANAGER;
     }
 
     isTechnician = (user) => {
-        return user && user.role && user.role == this.TECHNICIAN;
+        return user && user.role && user.role == TECHNICIAN;
     }
 
 }

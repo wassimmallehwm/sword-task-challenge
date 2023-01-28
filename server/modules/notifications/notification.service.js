@@ -1,20 +1,7 @@
 const Notification = require("./notification.model");
-const { notif_types, notif_enums } = require("./constants");
-
-
-// const sendNotifToAdmins = async (io, data) => {
-//     try {
-//         const admin = await Role.findOne({ label: 'ADMIN' })
-//         data.roles = [admin._id]
-//         const notif = await save(data)
-//         io.sockets.in("ADMIN").emit('notif', notif);
-//     } catch (err) {
-//         console.error("Notification creation failed: " + err);
-//     }
-// }
-
 const { ResponseSuccess, ResponseError } = require("../../shared/response");
 const { ErrorsHandler } = require("../../utils");
+const { NOTIFICATION_QUEUE } = require("../../constants");
 
 const SERVICE_NAME = "NotificationsService"
 
@@ -42,41 +29,22 @@ class NotificationsService {
             const result = await item.save();
             return result;
         } catch (err) {
-            console.error("Notification creation failed: " + err);
-        }
-    }
-
-    sendNotifToUser = async (io, data, user) => {
-        try {
-            data.user = user
-            const notif = await this.save(data)
-            io.sockets.in(user.toString()).emit('notif', notif);
-        } catch (err) {
-            console.error("Notification creation failed: " + err);
-        }
-    }
-
-    findLastFive = async (query = {}) => {
-        try {
-            let result = await Event.find(query)
-                .populate({ path: 'createdBy', model: 'User' })
-                .populate({ path: 'category', model: 'Category' })
-                .populate({ path: 'allowedViewers', model: 'Group' });
-            if (result) {
-                result = result.map(elem => new EventDto(elem))
-                return new ResponseSuccess({
-                    status: 200,
-                    content: result
-                })
-            }
-        } catch (err) {
             return new ResponseError(
-                ErrorsHandler.handle(err, `${SERVICE_NAME}:findAll`)
+                ErrorsHandler.handle(err, `${SERVICE_NAME}:save`)
             )
         }
     }
 
-    findAllPaginated = async ({ page, limit, sortField, sortOrder, search }) => {
+    sendNotificaton = async (io, data, group) => {
+        try {
+            const notif = await this.save(data)
+            io.sockets.in(group).emit(NOTIFICATION_QUEUE, notif);
+        } catch (err) {
+            console.error("Notification failed: " + err);
+        }
+    }
+
+    findAllPaginated = async ({ page, limit, search }) => {
         try {
             let filter = {}
             if (search && search.trim() !== "") {
@@ -93,14 +61,10 @@ class NotificationsService {
             let result = await Event.find(filter)
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .sort({ [sortField]: sortOrder })
-                .populate({ path: 'createdBy', model: 'User' })
-                .populate({ path: 'category', model: 'Category' })
-                .populate({ path: 'allowedViewers', model: 'Group' })
+                .sort('-_id')
                 .exec();
 
             if (result) {
-                result = result.map(elem => new EventDto(elem))
                 return new ResponseSuccess({
                     status: 200,
                     content: {
@@ -119,14 +83,40 @@ class NotificationsService {
         }
     }
 
-    sendNotifToUsers = (io, users, notifEnum, data, resource) => {
-        const { SUBJECT, CONTENT } = notif_types[notifEnum](data)
-        const notifData = {
-            subject: SUBJECT,
-            body: CONTENT,
-            resource
+    countUnread = async () => {
+        try {
+            const result = await Notification.find({ read: false }).count();
+            if (result) {
+                return new ResponseSuccess({
+                    status: 200,
+                    content: result
+                })
+            }
+        } catch (err) {
+            return new ResponseError(
+                ErrorsHandler.handle(err, `${SERVICE_NAME}:countUnread`)
+            )
         }
-        users.forEach(user => this.sendNotifToUser(io, notifData, user))
+    }
+
+    read = async (id) => {
+        try {
+            const result = await Notification.findOneAndUpdate(
+                { _id: id },
+                { read: true },
+                { new: true }
+            );
+            if (result) {
+                return new ResponseSuccess({
+                    status: 200,
+                    content: result
+                })
+            }
+        } catch (err) {
+            return new ResponseError(
+                ErrorsHandler.handle(err, `${SERVICE_NAME}:read`)
+            )
+        }
     }
 }
 

@@ -4,6 +4,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
 const fs = require('fs');
+const { ACCESS_TOKEN, REFRESH_TOKEN } = require('../constants');
 
 const expressMiddelwares = (app, dir) => {
   app.use('/public', express.static(path.join(dir, 'public')));
@@ -12,8 +13,8 @@ const expressMiddelwares = (app, dir) => {
     credentials: true,
     allowedHeaders: [
       "content-type",
-      "access_token",
-      "refresh_token",
+      ACCESS_TOKEN,
+      REFRESH_TOKEN,
       "responsetype",
       "headers"
     ],

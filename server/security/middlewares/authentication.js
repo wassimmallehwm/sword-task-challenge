@@ -1,6 +1,7 @@
 const jwtService = require('../token/jwt.service');
 const jwt = require('jsonwebtoken');
 const { PermissionsHandler } = require('../../utils');
+const { ACCESS_TOKEN, REFRESH_TOKEN } = require('../../constants');
 
 const getToken = (req, name) => {
     //return req.header(name);
@@ -9,7 +10,7 @@ const getToken = (req, name) => {
 
 const authenticated = (req, res, next) => {
     try{
-        const token = getToken(req, 'access_token')
+        const token = getToken(req, ACCESS_TOKEN)
         if(!token){
             return res.status(401).json({message : "Not Authorized !"})
         }
@@ -31,7 +32,7 @@ const authenticated = (req, res, next) => {
 
 const refreshToken = (req, res, next) => {
     try{
-        const token = getToken(req, 'refresh_token')
+        const token = getToken(req, REFRESH_TOKEN)
         if(!token){
             return res.status(401).json({message : "Not Authorized !"})
         }

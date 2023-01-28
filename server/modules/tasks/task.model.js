@@ -14,7 +14,7 @@ const TaskSchema = new mongoose.Schema({
         required: true,
         ref: "user",
     },
-    performed: {
+    isPerformed: {
         type: Boolean,
         default: false
     },

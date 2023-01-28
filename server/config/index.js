@@ -7,6 +7,9 @@ module.exports = {
     JWT_SECRET: process.env.JWT_SECRET || '$2a$10$.6vrQSA.tIpm.C1thlZ8fOKrnJ6RzHNdcdWNXPEeio0QZxrO241zW',
     JWT_ACCESS_EXPIRATION : process.env.JWT_ACCESS_EXPIRATION || '600s',
     JWT_REFRESH_EXPIRATION : process.env.JWT_REFRESH_EXPIRATION || '10d',
+
+    //RabbitMq config
+    CLOUDAMQP_URL: process.env.CLOUDAMQP_URL || 'amqp://localhost:5672',
     
     //Client config
     CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:3000/',
