@@ -2,8 +2,8 @@ const { ResponseError, ResponseSuccess } = require("../../shared/response");
 const { AuthResponse } = require("./auth-response");
 const { ErrorsHandler } = require('../../utils');
 const { JwtService, PasswordEncoder } = require('../../security');
-const User = require("./user.model");
-const UserDto = require("./user.dto");
+const User = require("../users/user.model");
+const UserDto = require("../users/user.dto");
 
 
 class AuthService {

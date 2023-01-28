@@ -26,4 +26,12 @@ const TaskSchema = new mongoose.Schema({
     timestamps: true
 });
 
+TaskSchema.virtual('id').get(function(){
+    return this._id.toHexString();
+});
+
+// Ensure virtual fields are serialised.
+TaskSchema.set('toJSON', {
+    virtuals: true
+});
 module.exports = mongoose.model('Task', TaskSchema);

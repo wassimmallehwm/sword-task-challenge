@@ -17,7 +17,7 @@ module.exports.login = async (req, res) => {
       maxAge: JwtService.expiration(content.refresh_token),
       httpOnly: true 
     })
-    .json(success ? content : { message });
+    .json(success ? {...content.user} : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, "AuthController:login")
     res.status(status).json({ message, entity: 'User' })
@@ -36,7 +36,7 @@ module.exports.refresh_token = async (req, res) => {
       maxAge: JwtService.expiration(content.refresh_token),
       httpOnly: true 
     })
-    .json(success ? content : { message });
+    .json(success ? success : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, "AuthController:refresh_token")
     res.status(status).json({ message, entity: 'User' })

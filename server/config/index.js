@@ -1,10 +1,11 @@
 const createDbURL = () => {
-    const DATABASE_HOST = process.env.DATABASE_HOST || 'mongo'
+    const DATABASE_HOST = process.env.DATABASE_HOST || 'localhost' //'mongo'
     const DATABASE_PORT = process.env.DATABASE_PORT || '27017'
     const DATABASE_USERNAME = process.env.DATABASE_USERNAME || 'root'
     const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || 'root'
     const DATABASE_NAME = process.env.DATABASE_NAME || 'tasks'
-    return `mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?authSource=admin`
+    const url = `mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?authSource=admin`
+    return url
 }
 
 module.exports = {

@@ -4,6 +4,7 @@ const { ErrorsHandler } = require("../../utils");
 const MessageBroker = require('../../config/MessageBroker')
 const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
 const { NOTIFICATION_QUEUE } = require("../../constants");
+const UserDto = require("../users/user.dto");
 const SERVICE_NAME = "TaskService"
 
 class TaskService {
@@ -104,13 +105,14 @@ class TaskService {
             let result = await Task.find(filter)
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .sort({ [sortField]: sortOrder })
+                //.sort({ [sortField]: sortOrder })
                 .populate({
                     path: 'createdBy',
                     model: 'User',
-                    select: 'email username firstname lastname role'
-                }).exec();
-
+                });
+            result = result.map(elem => {
+                return { ...elem.toJSON(), createdBy: new UserDto(elem.createdBy) }
+            })
             if (result) {
                 return new ResponseSuccess({
                     status: 200,
