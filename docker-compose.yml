@@ -1,0 +1,49 @@
+version: "3"
+services:
+  web:
+    build: ./server
+    container_name: web
+    ports:
+      - 4000:4000
+    volumes:
+      - ./server:/app:ro
+      - /app/node_modules
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo
+    restart: always
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    container_name: mongo-express
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER : mongo
+      ME_CONFIG_MONGODB_ENABLE_ADMIN : true
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@mongo:27017/
+  rabbitmq:
+    image: "rabbitmq:3.11.7-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "rabbitmq_data:/data"
+volumes:
+  rabbitmq_data:
+  mongodb:

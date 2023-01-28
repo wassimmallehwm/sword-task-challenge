@@ -4,7 +4,7 @@
   "description": "Sword task challenge",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon -L index.js",
     "start": "node index.js",
     "seed": "node ./database/seed.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=5000"

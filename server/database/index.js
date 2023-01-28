@@ -10,6 +10,9 @@ const dbConnect = () => {
   connection.once('open', async () => {
     console.info('Connected to DataBase');
   })
+  connection.once('close', async () => {
+    console.info('Connection closed');
+  })
 }
 
 module.exports = dbConnect;
