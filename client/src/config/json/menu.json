@@ -1,0 +1,12 @@
+[
+    {
+        "label": "technicians",
+        "url": "/technicians",
+        "roles": ["Manager"]
+    },
+    {
+        "label": "tasks",
+        "url": "/tasks",
+        "roles": ["ALL"]
+    }
+]

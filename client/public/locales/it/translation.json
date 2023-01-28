@@ -1,0 +1,34 @@
+{
+    "slogan" : "Ça te va bien",
+    "discoverUs" : "Découvrez-nous",
+    "details" : "Détailles",
+    "usefulLinks" : "Liens utiles",
+    "menu" : {
+        "home": "Accueil",
+        "about": "À propos de nous",
+        "contact": "Contact",
+        "products": "Produits"
+    },
+    "titles" : {
+        "products": "Nos produits",
+        "contact": "Contactez-nous",
+        "clients": "Nos clients",
+        "findUsOnMaps": "Trouvez-nous sur la carte",
+        "prodCapacity": "Capacité de production",
+        "prodLine": "Ligne de production",
+        "objectifs": "Nos objectifs"
+    },
+    "form" : {
+        "subject": "Sujet",
+        "email": "Email",
+        "message": "Message",
+        "send" : "Envoyer"
+    },
+    "aboutUsText" : "Il s’agit d’une idée, lancée par deux femmes, amies, l’une est modéliste, qui a acquis une expérience de cinq années dans le domaine du textile, l’autre a une expérience de 5 années dans la direction des entreprises. Cette relation et cette complémentarité ont abouti à la création de ce projet, après mûre réflexion et plusieurs réunions de travail, afin d’étudier le schéma de financement et l’étude de rentabilité. La société a été créée le 1er Novembre 2021.",
+    "prodLineText" : "Actuellement la société compte 20 personnes dans un premier temps. Nous comptons encore recruter une dizaine de personnes, pour atteindre plus que 30 personnes, dans une seconde phase.",
+    "prodCapacityText" : "Nous nous engageons à respecter les délais de fabrication, tout en conservant la bonne qualité des produits. Nous comptons développer notre activité pour conquérir de nouveaux marchés, en Tunisie et à l’étranger.",
+    "objectifsText" : "La création d’une marque de prêt à porter propre à nous, spécialisée essentiellement dans la fabrication d’articles pour les grandes tailles.",
+    "clientsText" : "Nous exécutons des commandes de prêt à porter, destinées à l'exportation pour des clients étrangers et la confection des tenues de travail pour le marché local.",
+    "getInTouch" : "Entrez en contact",
+    "contactUsText" : "nous sommes là pour vous aider et répondre à toutes vos questions. Nous avons hâte d'avoir de vos nouvelles."
+}

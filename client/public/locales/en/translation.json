@@ -1,0 +1,34 @@
+{
+    "slogan" : "It fits you well",
+    "discoverUs" : "Discover us",
+    "details" : "Details",
+    "usefulLinks" : "Useful links",
+    "menu" : {
+        "home": "Home",
+        "about": "About us",
+        "contact": "Contact",
+        "products": "Products"
+    },
+    "titles" : {
+        "products": "Our products",
+        "contact": "Contact us",
+        "clients": "Our clients",
+        "findUsOnMaps": "Find us on the map",
+        "prodCapacity": "Production capacity",
+        "prodLine": "Production line",
+        "objectifs": "Our objectifs"
+    },
+    "form" : {
+        "subject": "Subject",
+        "email": "Email",
+        "message": "Message",
+        "send" : "Send"
+    },
+    "aboutUsText" : "It is an idea, launched by two women, friends, one is a model maker, who has acquired five years' experience in the field of textiles, the other has 5 years' experience in the management of companies. This relationship and this complementarity led to the creation of this project, after careful consideration and several work meetings, in order to study the financing scheme and the profitability study. The company was created on November 1, 2021.",
+    "prodLineText" : "Currently the company has 20 people at first. We still plan to recruit around ten people, to reach more than 30 people, in a second phase.",
+    "prodCapacityText" : "We are committed to respecting the manufacturing deadlines, while maintaining the good quality of the products. We intend to develop our activity to conquer new markets, in Tunisia and abroad.",
+    "objectifsText" : "The creation of our own ready-to-wear brand, specializing mainly in the manufacture of items for large sizes.",
+    "clientsText" : "We carry out ready-to-wear orders, intended for export for foreign customers and the making of work clothes for the local market.",
+    "getInTouch" : "Get in touch",
+    "contactUsText" : "we’re here to help and answer any question you might have. We look forward to hearing from you."
+}

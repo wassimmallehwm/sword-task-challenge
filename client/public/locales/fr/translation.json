@@ -1,0 +1,12 @@
+{
+    "app_name": "Gestionnaire des tâches",
+    "titles" : {
+        "technicians": "Techniciens",
+        "tasks": "Tâches"
+    },
+    "btns" : {
+        "create": "Créer",
+        "edit": "Modifier",
+        "delete": "Supprimer"
+    }
+}

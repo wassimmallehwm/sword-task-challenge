@@ -1,0 +1,66 @@
+@tailwind base;
+
+
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: lightgray transparent;
+  }
+  
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+    border-radius: 4px;
+  }
+  
+
+@tailwind components;
+@tailwind utilities;
+
+.aspect-1 {
+    aspect-ratio: 1;
+}
+
+.full-height-container{
+    height: calc(100vh - 60px)!important;
+}
+
+.form-layout{
+    grid-template-rows: 6rem auto 4rem;
+}
+
+.rtl{
+    direction: rtl;
+}
+
+.main-div{
+    padding: 1.5rem !important;
+}
+
+.chatBox{
+    height: calc(100vh - 150px)!important;
+}
+
+.p-paginator-bottom{
+    position: sticky!important;
+    bottom: 0!important;
+}
+
+.active > li{
+    border-bottom: 2px solid red!important;
+    width: 100%!important;
+}
+
+.rdw-editor-main{
+    height: auto!important;
+}
