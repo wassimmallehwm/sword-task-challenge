@@ -7,4 +7,12 @@ export type Task = {
     createdBy? : Account
     isPerformed? :  boolean
     performedAt? : Date
+    createdAt? : Date
+}
+
+export const InitTask: Task = {
+    title : '',
+    summary : '',
+    isPerformed :  false,
+    performedAt : new Date()
 }

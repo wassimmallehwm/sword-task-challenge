@@ -171,6 +171,8 @@ class TaskService {
                     status: 404,
                     message: "Task not found !"
                 })
+                console.log(task.createdBy )
+                console.log(user._id )
             if (task.createdBy != user._id)
                 return new ResponseError({
                     status: 403,
@@ -181,8 +183,10 @@ class TaskService {
                     status: 400,
                     message: "Task already performed !"
                 })
-
-            let result = await Task.findOneAndUpdate({ _id: id }, data, { new: true });
+                const { title, summary, isPerformed, performedAt} = data
+            let result = await Task.findOneAndUpdate({ _id: id },
+                { title, summary, isPerformed, performedAt},
+                { new: true });
             result = await result
                 .populate({
                     path: 'createdBy',

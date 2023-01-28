@@ -3,6 +3,7 @@ import { isManager } from "@utils/roles"
 import { Button } from "@shared/components";
 import { Account } from "@modules/users/models/Account";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { formateDateTime } from "@utils/dateFormat";
 
 type ColumnsProps = {
     user: Account,
@@ -33,7 +34,11 @@ const Columns = ({
                 "Yes" : "No"
         },
         {
-            field: "action", headerName: 'Actions', Width: 100, type: 'action',
+            field: 'performedAt', headerName: 'Performed at', minWidth: 100, flex: true, type: 'boolean',
+            renderCell: (cellValues: GridValueGetterParams) => formateDateTime(cellValues.row.performedAt)
+        },
+        {
+            field: "action", headerName: 'Actions', Width: 100, type: 'actions',
             renderCell: (cellValues: GridValueGetterParams) => {
                 return (
                     <div className="action-icon">

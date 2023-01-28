@@ -30,6 +30,13 @@ class TasksService extends BaseService {
         return this.httpClient<Task>(this.httpUrl(id), 'GET');
     }
 
+    save(id: string|undefined, data: Task){
+        if(id && id.trim() !== ""){
+            return this.update(id, data);
+        }
+        return this.create(data);
+    }
+
     create(data: Task){
         return this.httpClient(this.httpUrl(""), 'POST', data);
     }

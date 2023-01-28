@@ -67,7 +67,7 @@ const Modal = ({
                                         </h4>
                                     ) : null
                                 }
-                                <Button onClick={cancel} color='primary' outline rounded>
+                                <Button title='close' onClick={cancel} color='primary' outline rounded>
                                     <FaTimes className='cursor-pointer' />
                                 </Button>
                             </div>

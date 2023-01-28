@@ -8,6 +8,7 @@ import { SocketContext } from '@contexts/index';
 import { Account } from '@modules/users/models/Account';
 import { toastError } from '@utils/toast';
 import { useTranslation } from 'react-i18next';
+import httpErrorHandler from '@utils/error-handler';
 
 const Login = () => {
     const { t } = useTranslation()
@@ -40,7 +41,7 @@ const Login = () => {
             const { data } = await authService.authenticate(loginInfo)
             onLogin(data)
         } catch (error:any) {
-            toastError(error?.response?.data)
+            toastError(httpErrorHandler(error).message)
         } finally {
             setLoading(false)
         }

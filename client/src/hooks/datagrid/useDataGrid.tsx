@@ -49,7 +49,7 @@ function useDataGrid({
     const gridColumns = React.useMemo(
         () =>
             columns.map((col) => {
-                if(col.type == 'action'){
+                if(col.type == 'actions'){
                     return {
                         ...col,
                         filterable: false,

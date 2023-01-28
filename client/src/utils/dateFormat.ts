@@ -12,6 +12,6 @@ export const fromNow = (date: any) => {
     return moment(date).fromNow()
 }
 
-export const formatDateToInput = (date: any) => {
-    return moment(date).format('YYYY-MM-DD')
+export const formatDateTimeToInput = (date: any) => {
+    return moment(date).format('YYYY-MM-DD HH:mm')
 }
