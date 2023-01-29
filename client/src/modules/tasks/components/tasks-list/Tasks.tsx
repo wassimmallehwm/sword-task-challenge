@@ -11,6 +11,9 @@ import Columns from './Columns'
 import { FaPlus } from 'react-icons/fa'
 import TasksForm from '../tasks-form/TasksForm'
 import { isManager } from '@utils/roles'
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 const Tasks = () => {
     const { user } = useContext(AuthContext)
@@ -19,6 +22,33 @@ const Tasks = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [task, setTask] = useState<Task>(InitTask);
     const [loading, setLoading] = useState<boolean>(false);
+    const validationSchema = Yup.object().shape({
+        title: Yup.string()
+            .required(t('validation.required', { field: t('title') })),
+        summary: Yup.string()
+            .required(t('validation.required', { field: t('summary') })),
+        isPerformed: Yup.boolean(),
+        performedAt: Yup.string()
+        .when("isPerformed", {
+            is: true,
+            then: Yup.string().required(t('validation.required', { field: t('performedAt') }))
+          })
+        
+    });
+    const formOptions = {resolver: yupResolver(validationSchema)};
+
+    const {
+        register,
+        unregister,
+        handleSubmit,
+        reset,
+        formState: { errors },
+        watch
+    } = useForm({
+        ...formOptions,
+        shouldUnregister: true
+    });
+    const watchIsPerformed = watch("isPerformed");
 
     const getTasks = async () => {
         setLoading(true)
@@ -33,7 +63,7 @@ const Tasks = () => {
         }
     }
 
-    const save = async () => {
+    const save = async (data: any) => {
         showLoading()
         try {
             const { data } = await TasksService.save(task._id, task)
@@ -69,8 +99,8 @@ const Tasks = () => {
 
     const formModal = useModal({
         title: task?._id ? t('editRes', { res: t('task') }) : t('createRes', { res: t('task') }),
-        content: <TasksForm task={task} onChange={onChange} />,
-        save: save,
+        content: <TasksForm register={register} errors={errors} watchIsPerformed={watchIsPerformed} />,
+        save: handleSubmit(save),
         modalBtns: !task?.isPerformed,
         onCancel: () => setTask(InitTask)
     })
@@ -78,6 +108,18 @@ const Tasks = () => {
     useEffect(() => {
         getTasks();
     }, [...dataGrid.effectParams]);
+
+    useEffect(() => {
+        reset(task);
+    }, [task]);
+
+    useEffect(() => {
+        if (watchIsPerformed) {
+            register("performedAt");
+        } else {
+            unregister("performedAt");
+        }
+    }, [register, unregister, watchIsPerformed]);
 
     return (
         <div className="main-div">

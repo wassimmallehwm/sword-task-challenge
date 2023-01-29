@@ -13,6 +13,5 @@ export type Task = {
 export const InitTask: Task = {
     title : '',
     summary : '',
-    isPerformed :  false,
-    performedAt : new Date()
+    isPerformed :  false
 }

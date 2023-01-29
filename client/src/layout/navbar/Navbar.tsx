@@ -8,6 +8,7 @@ import { Config } from '@config/Config'
 import { Button, Dropdown } from '@shared/components'
 import { DropdownItem } from '@shared/types'
 import { Account } from '@modules/users/models/Account'
+import logo from '../../assets/logo.png'
 
 
 
@@ -63,7 +64,7 @@ const Navbar = ({
                         <FaBars className="text-black" size="25px" />
                     </button>
                     <Link to="/">
-                    {t('app_name')}
+                    <img src={logo} className="h-14 m-auto" alt="logo"/>
                     </Link>
                 </div>
                 <ul className='hidden md:flex items-center justify-center h-full'>

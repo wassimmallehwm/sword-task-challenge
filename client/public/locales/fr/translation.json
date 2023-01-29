@@ -1,6 +1,10 @@
 {
     "app_name": "Gestionnaire des tâches",
     "task": "tâche",
+    "title": "Titre",
+    "summary": "Résumé",
+    "isPerformed": "Effecuté",
+    "performedAt": "Effecuté à",
     "titles" : {
         "technicians": "Techniciens",
         "tasks": "Tâches"
@@ -15,5 +19,8 @@
     "editRes": "Modifier la {{res}}",
     "success": {
         "save": "{{res}} créée avec succès"
+    },
+    "validation": {
+        "required": "{{field}} est obligatoire"
     }
 }

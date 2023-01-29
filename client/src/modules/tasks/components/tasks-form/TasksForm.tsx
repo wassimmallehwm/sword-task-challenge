@@ -3,24 +3,24 @@ import { DateTimePicker } from '@mui/x-date-pickers'
 import { Input, Toggle } from '@shared/components/form'
 import { formatDateTimeToInput } from '@utils/dateFormat'
 import React from 'react'
+import { FieldValues, UseFormRegister } from 'react-hook-form'
+import { FieldErrorsImpl } from 'react-hook-form/dist/types/errors'
 import { useTranslation } from 'react-i18next'
 
 type TasksFormProps = {
-    task: Task
-    onChange: any
+    register: UseFormRegister<FieldValues>
+    errors: Partial<FieldErrorsImpl<{
+        [x: string]: any;
+    }>>
+    watchIsPerformed: boolean
 }
 
-const TasksForm = ({
-    task,
-    onChange
-}: TasksFormProps) => {
-    const { title, summary, isPerformed, performedAt } = task
+const TasksForm = React.forwardRef(({
+    register,
+    errors,
+    watchIsPerformed
+}: TasksFormProps, ref) => {
     const { t } = useTranslation()
-
-    const onDataChange = (e: any) => {
-        const { name, value } = e.target
-        onChange(name, value)
-    }
 
     return (
         <form action="" className="flex flex-col gap-4">
@@ -28,29 +28,65 @@ const TasksForm = ({
                 <label className="text-sm font-bold text-gray-600 block">
                     {t('title')}
                 </label>
-                <Input type="text" name="title" value={title} onChange={onDataChange} />
+                <input type="text" {...register('title')}
+                    className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
+                    focus:outline-none focus:ring-1 bg-white py-1 px-2 border 
+                    ${errors.title ? 'border-red-700' : 'border-gray-300'}`} />
+                {
+                    errors.title ?
+                        <div className="text-red-700">
+                            {errors.title?.message?.toString()}
+                        </div>
+                        : null
+                }
             </div>
             <div>
                 <label className="text-sm font-bold text-gray-600 block">
                     {t('summary')}
                 </label>
-                <Input textarea={true} type="text" name="summary" value={summary} onChange={onDataChange} />
+                <textarea {...register('summary')}
+                    className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
+                    focus:outline-none focus:ring-1 bg-white py-1 px-2 border 
+                    ${errors.summary ? 'border-red-700' : 'border-gray-300'}`} rows={3}>
+
+                </textarea>
+
+                {
+                    errors.summary ?
+                        <div className="text-red-700">
+                            {errors.summary?.message?.toString()}
+                        </div>
+                        : null
+                }
             </div>
             <div className='flex items-center gap-4'>
 
                 <div className='w-full'>
-                    <Toggle enabled={isPerformed!} label={t('isPerformed')}
-                        onChange={(val: boolean) => onChange('isPerformed', val)} />
+                    <label className='flex items-center w-min cursor-pointer'>
+                        <input className='w-6 h-6 mx-2 cursor-pointer accent-primary-500'
+                            type='checkbox' {...register('isPerformed')} />
+                        {t('isPerformed')}
+                    </label>
                 </div>
 
                 {
-                    isPerformed ? (
+                    watchIsPerformed ? (
                         <div className='w-full'>
                             <label className="text-sm font-bold text-gray-600 block">
                                 {t('performedAt')}
                             </label>
-                            <Input type="datetime-local" name="performedAt"
-                                value={formatDateTimeToInput(performedAt)} onChange={onDataChange} />
+                            <input type="datetime-local" {...register('performedAt')}
+                                className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
+                                focus:outline-none focus:ring-1 bg-white py-1 px-2 border 
+                                ${errors.performedAt ? 'border-red-700' : 'border-gray-300'}`} />
+
+                            {
+                                errors.performedAt ?
+                                    <div className="text-red-700">
+                                        {errors.performedAt?.message?.toString()}
+                                    </div>
+                                    : null
+                            }
                         </div>
                     ) : null
                 }
@@ -58,6 +94,6 @@ const TasksForm = ({
             </div>
         </form>
     )
-}
+})
 
 export default TasksForm
