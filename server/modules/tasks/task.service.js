@@ -28,13 +28,14 @@ class TaskService {
     create = async (data, createdBy) => {
         try {
             if (
-                this.nullOrEmpty(data.title) ||
-                this.nullOrEmpty(data.summary) ||
-                this.nullOrEmpty(createdBy)
+                (this.nullOrEmpty(data.title) ||
+                    this.nullOrEmpty(data.summary) ||
+                    this.nullOrEmpty(createdBy)) ||
+                (data.isPerformed && this.nullOrEmpty(performedAt))
             )
                 return new ResponseError({
                     status: 400,
-                    message: `Task information missing!`
+                    message: `Invalid task data !`
                 })
 
             const task = new Task({ ...data, createdBy });
@@ -171,8 +172,8 @@ class TaskService {
                     status: 404,
                     message: "Task not found !"
                 })
-                console.log(task.createdBy )
-                console.log(user._id )
+            console.log(task.createdBy)
+            console.log(user._id)
             if (task.createdBy != user._id)
                 return new ResponseError({
                     status: 403,
@@ -183,9 +184,9 @@ class TaskService {
                     status: 400,
                     message: "Task already performed !"
                 })
-                const { title, summary, isPerformed, performedAt} = data
+            const { title, summary, isPerformed, performedAt } = data
             let result = await Task.findOneAndUpdate({ _id: id },
-                { title, summary, isPerformed, performedAt},
+                { title, summary, isPerformed, performedAt },
                 { new: true });
             result = await result
                 .populate({
@@ -210,11 +211,6 @@ class TaskService {
                 return new ResponseError({
                     status: 404,
                     message: "Task not found !"
-                })
-            if (task.createdBy != user._id)
-                return new ResponseError({
-                    status: 403,
-                    message: "Permission denied !"
                 })
             const result = await Task.deleteOne({ _id: id });
 

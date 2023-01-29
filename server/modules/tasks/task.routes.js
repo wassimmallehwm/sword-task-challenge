@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { authenticated } = require('../../security/middlewares');
+const { authenticated, manager } = require('../../security/middlewares');
 const { create, getAll, list, getById, update, remove } = require('./task.controller');
 
 router.post('/', authenticated, create);
@@ -12,7 +12,7 @@ router.get('/:id', authenticated, getById);
 
 router.put('/:id', authenticated, update);
 
-router.delete('/:id', authenticated, remove);
+router.delete('/:id', authenticated, manager, remove);
 
 
 module.exports = router;
