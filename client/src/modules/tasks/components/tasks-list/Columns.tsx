@@ -30,7 +30,7 @@ const Columns = ({
 
     return [
         { field: 'title', headerName: t('title'), minWidth: 150, flex: true },
-        { field: 'summary', headerName: 'Summary', minWidth: 150, flex: true },
+        { field: 'summary', headerName: t('summary'), minWidth: 150, flex: true },
         ...cols,
         {
             field: 'isPerformed', headerName: t('isPerformed'), minWidth: 100, flex: true, type: 'boolean',
