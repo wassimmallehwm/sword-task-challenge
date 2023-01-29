@@ -31,21 +31,14 @@ const Navbar = ({
         navigate('/login')
     }
 
-    const toProfil = () => {
-        navigate('/profile')
-    }
+    useEffect(() => {
+        socket?.on('Notifications', data => {
+            console.log(data)
+        })
+    }, [])
 
-    const dropdownItems = (user: Account): DropdownItem[] => {
+    const dropdownItems = (): DropdownItem[] => {
         return [
-            {
-                component: (
-                    <div className="flex items-center gap-4">
-                        {/* <img className="h-8 w-8 rounded-full" src={userImage(user?.imagePath!)} alt={user?.displayName} /> */}
-                        {user?.displayName}
-                    </div>
-                ),
-                action: toProfil
-            },
             {
                 label: 'Sign out',
                 action: onLogout
@@ -64,7 +57,7 @@ const Navbar = ({
                         <FaBars className="text-black" size="25px" />
                     </button>
                     <Link to="/">
-                    <img src={logo} className="h-14 m-auto" alt="logo"/>
+                        <img src={logo} className="h-14 m-auto" alt="logo" />
                     </Link>
                 </div>
                 <ul className='hidden md:flex items-center justify-center h-full'>
@@ -80,20 +73,11 @@ const Navbar = ({
                     }
                 </ul>
                 <div className='flex items-center gap-4'>
-                    {
-                        user ? (
-                            <Dropdown trigger={(
-                                <span>{user?.displayName}</span>
-                                // <img className="h-10 w-h-10 rounded-full" src={userImage("user_default")} alt="user" />
-                            )}
-                                items={dropdownItems(user!)}
-                            />
-                        ) : (
-                            <Button color='primary' onClick={() => navigate('/login')}>
-                                Login
-                            </Button>
-                        )
-                    }
+                    <Dropdown trigger={(
+                        <span>{user?.displayName}</span>
+                    )}
+                        items={dropdownItems()}
+                    />
                 </div>
 
             </div>

@@ -2,6 +2,7 @@ import React, { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { FaExclamation, FaTimes } from 'react-icons/fa'
 import Button from './Button'
+import { useTranslation } from 'react-i18next'
 
 interface ModalProps {
     open: boolean
@@ -29,6 +30,7 @@ const Modal = ({
     fixedHeight
 }: ModalProps) => {
     const cancelButtonRef = useRef(null)
+    const {t} = useTranslation()
     return (
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" initialFocus={cancelButtonRef} onClose={cancel}>
@@ -90,7 +92,7 @@ const Modal = ({
                                             className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-${color}-500 text-base font-medium text-white hover:bg-${color}-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${color}-400 sm:ml-3 sm:w-auto sm:text-sm`}
                                             onClick={confirm}
                                         >
-                                            Save
+                                            {t('btns.save')}
                                         </button>
                                         <button
                                             type="button"
@@ -98,7 +100,7 @@ const Modal = ({
                                             onClick={cancel}
                                             ref={cancelButtonRef}
                                         >
-                                            Cancel
+                                            {t('btns.cancel')}
                                         </button>
                                     </div>
                                 ) : null

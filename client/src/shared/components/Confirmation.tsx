@@ -1,12 +1,12 @@
 import React, { Fragment, MouseEventHandler, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { FaExclamation } from 'react-icons/fa'
+import { useTranslation } from 'react-i18next'
 
 interface ConfirmationProps {
     open: boolean
     confirm: any
     cancel: any
-    text: string
     color?: string
 }
 
@@ -14,9 +14,9 @@ const Confirmation = ({
     open,
     confirm,
     cancel,
-    text,
     color = 'indigo'
 }: ConfirmationProps) => {
+    const {t} = useTranslation()
 
     const cancelButtonRef = useRef(null)
     return (
@@ -56,11 +56,11 @@ const Confirmation = ({
                                     </div>
                                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                                         <Dialog.Title as="h3" className="text-lg leading-6 font-medium text-gray-900">
-                                            Confirmation
+                                            {t('titles.confirmation')}
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-500">
-                                                {text}
+                                            {t('text.confirmation')}
                                             </p>
                                         </div>
                                     </div>
@@ -72,7 +72,7 @@ const Confirmation = ({
                                     className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-${color}-500 text-base font-medium text-white hover:bg-${color}-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-${color}-400 sm:ml-3 sm:w-auto sm:text-sm`}
                                     onClick={confirm}
                                 >
-                                    Confirm
+                                    {t('btns.confirm')}
                                 </button>
                                 <button
                                     type="button"
@@ -80,7 +80,7 @@ const Confirmation = ({
                                     onClick={cancel}
                                     ref={cancelButtonRef}
                                 >
-                                    Cancel
+                                    {t('btns.cancel')}
                                 </button>
                             </div>
                         </div>

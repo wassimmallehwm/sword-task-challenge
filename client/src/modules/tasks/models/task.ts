@@ -6,7 +6,7 @@ export type Task = {
     summary? : string
     createdBy? : Account
     isPerformed? :  boolean
-    performedAt? : Date
+    performedAt? : string
     createdAt? : Date
 }
 

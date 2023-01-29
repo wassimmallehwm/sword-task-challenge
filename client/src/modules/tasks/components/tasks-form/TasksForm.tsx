@@ -45,7 +45,7 @@ const TasksForm = React.forwardRef(({
                     {t('summary')}
                 </label>
                 <textarea {...register('summary')}
-                    className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
+                    className={`w-full h-auto resize-none rounded mt-1 outline-none focus:border-primary-300 
                     focus:outline-none focus:ring-1 bg-white py-1 px-2 border 
                     ${errors.summary ? 'border-red-700' : 'border-gray-300'}`} rows={3}>
 

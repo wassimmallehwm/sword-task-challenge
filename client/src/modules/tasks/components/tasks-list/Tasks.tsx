@@ -1,5 +1,5 @@
 import { AuthContext } from '@contexts/index'
-import { useDataGrid, useModal } from '@hooks/index'
+import { useConfirmation, useDataGrid, useModal } from '@hooks/index'
 import { InitTask, Task } from '@modules/tasks/models/task'
 import TasksService from '@modules/tasks/services/tasks.service'
 import { Button, PageTitle } from '@shared/components'
@@ -14,6 +14,8 @@ import { isManager } from '@utils/roles'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { formatDateTimeToInput } from '@utils/dateFormat'
+import TasksView from '../tasks-view/TasksView'
 
 const Tasks = () => {
     const { user } = useContext(AuthContext)
@@ -21,6 +23,7 @@ const Tasks = () => {
 
     const [tasks, setTasks] = useState<Task[]>([]);
     const [task, setTask] = useState<Task>(InitTask);
+    const [deleteTask, setDeleteTask] = useState<string|null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const validationSchema = Yup.object().shape({
         title: Yup.string()
@@ -29,13 +32,13 @@ const Tasks = () => {
             .required(t('validation.required', { field: t('summary') })),
         isPerformed: Yup.boolean(),
         performedAt: Yup.string()
-        .when("isPerformed", {
-            is: true,
-            then: Yup.string().required(t('validation.required', { field: t('performedAt') }))
-          })
-        
+            .when("isPerformed", {
+                is: true,
+                then: Yup.string().required(t('validation.required', { field: t('performedAt') }))
+            })
+
     });
-    const formOptions = {resolver: yupResolver(validationSchema)};
+    const formOptions = { resolver: yupResolver(validationSchema) };
 
     const {
         register,
@@ -44,7 +47,7 @@ const Tasks = () => {
         reset,
         formState: { errors },
         watch
-    } = useForm({
+    } = useForm<Task>({
         ...formOptions,
         shouldUnregister: true
     });
@@ -63,10 +66,10 @@ const Tasks = () => {
         }
     }
 
-    const save = async (data: any) => {
+    const save = async (val: Task) => {
         showLoading()
         try {
-            const { data } = await TasksService.save(task._id, task)
+            await TasksService.save(task._id, val)
             toastSuccess(t('succes.save', { res: t('task') }))
             getTasks()
             formModal.closeModal()
@@ -75,15 +78,47 @@ const Tasks = () => {
         }
     }
 
-    const onChange = (name: string, value: any) => {
-        setTask({ ...task, [name]: value })
-    }
-
     const handleEdit = (id: string) => {
         const currentTask = tasks.find(elem => elem._id === id)
         if (currentTask !== undefined) {
-            setTask(currentTask)
+            setTask({
+                ...currentTask,
+                performedAt: formatDateTimeToInput(currentTask.performedAt)
+            })
             formModal.openModal()
+        }
+    }
+
+    const handleDelete = (id: string) => {
+        setDeleteTask(id)
+        deleteModal.openModal()
+    }
+
+    const onCancelDelete = () => {
+        setDeleteTask(null)
+        deleteModal.closeModal()
+    }
+
+    const onDelete = async () => {
+        showLoading()
+        try {
+            await TasksService.delete(deleteTask!)
+            toastSuccess(t('success.delete', { res: t('task') }))
+            getTasks()
+            onCancelDelete()
+        } catch (error: any) {
+            toastError(httpErrorHandler(error).message)
+        }
+    }
+
+    const handleView = (id: string) => {
+        const currentTask = tasks.find(elem => elem._id === id)
+        if (currentTask !== undefined) {
+            setTask({
+                ...currentTask,
+                performedAt: formatDateTimeToInput(currentTask.performedAt)
+            })
+            viewModal.openModal()
         }
     }
 
@@ -91,7 +126,8 @@ const Tasks = () => {
         columns: Columns({
             user: user!,
             handleEdit,
-            handleDelete: console.log
+            handleDelete,
+            handleView
         }),
         loading: loading,
         rows: tasks
@@ -99,10 +135,21 @@ const Tasks = () => {
 
     const formModal = useModal({
         title: task?._id ? t('editRes', { res: t('task') }) : t('createRes', { res: t('task') }),
-        content: <TasksForm register={register} errors={errors} watchIsPerformed={watchIsPerformed} />,
+        content: <TasksForm register={register} errors={errors} watchIsPerformed={watchIsPerformed!} />,
         save: handleSubmit(save),
         modalBtns: !task?.isPerformed,
         onCancel: () => setTask(InitTask)
+    })
+
+    const viewModal = useModal({
+        title: task?.title!,
+        content: <TasksView task={task}/>,
+        onCancel: () => setTask(InitTask)
+    })
+
+    const deleteModal = useConfirmation({
+        onConfirm: onDelete,
+        onCancel: onCancelDelete
     })
 
     useEffect(() => {
@@ -137,6 +184,8 @@ const Tasks = () => {
             </div>
             {dataGrid.grid}
             {formModal.modal}
+            {deleteModal.modal}
+            {viewModal.modal}
         </div>
     )
 }

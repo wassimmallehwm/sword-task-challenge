@@ -2,46 +2,55 @@ import { GridValueGetterParams } from "@mui/x-data-grid"
 import { isManager } from "@utils/roles"
 import { Button } from "@shared/components";
 import { Account } from "@modules/users/models/Account";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaCheck, FaEdit, FaEye, FaTimes, FaTrash } from "react-icons/fa";
 import { formateDateTime } from "@utils/dateFormat";
+import { useTranslation } from "react-i18next";
 
 type ColumnsProps = {
     user: Account,
     handleEdit: any,
-    handleDelete: any
+    handleDelete: any,
+    handleView: any
 }
 
 const Columns = ({
     user,
     handleEdit,
-    handleDelete
+    handleDelete,
+    handleView
 }: ColumnsProps) => {
+    const { t } = useTranslation()
     let cols = []
     if (isManager(user.role!)) {
         cols.push({
-            field: 'createdBy.displayName', headerName: 'Owner', minWidth: 150, flex: true,
+            field: 'createdBy.displayName', headerName: t('technician'), minWidth: 150, flex: true,
             renderCell: (cellValues: GridValueGetterParams) => cellValues.row.createdBy.displayName
         })
     }
 
     return [
-        { field: 'title', headerName: 'Title', minWidth: 150, flex: true },
+        { field: 'title', headerName: t('title'), minWidth: 150, flex: true },
         { field: 'summary', headerName: 'Summary', minWidth: 150, flex: true },
         ...cols,
         {
-            field: 'isPerformed', headerName: 'Performed', minWidth: 100, flex: true, type: 'boolean',
+            field: 'isPerformed', headerName: t('isPerformed'), minWidth: 100, flex: true, type: 'boolean',
             renderCell: (cellValues: GridValueGetterParams) => cellValues.row.isPerformed ?
-                "Yes" : "No"
+                <FaCheck className='text-primary-600' /> :
+                <FaTimes className='text-secondary-600' />
         },
         {
-            field: 'performedAt', headerName: 'Performed at', minWidth: 100, flex: true, type: 'boolean',
+            field: 'performedAt', headerName: t('performedAt'), minWidth: 100, flex: true, type: 'boolean',
             renderCell: (cellValues: GridValueGetterParams) => formateDateTime(cellValues.row.performedAt)
         },
         {
-            field: "action", headerName: 'Actions', Width: 100, type: 'actions',
+            field: "action", headerName: t('actions'), Width: 100, type: 'actions',
             renderCell: (cellValues: GridValueGetterParams) => {
                 return (
                     <div className="action-icon">
+                        <Button color='primary' title='view' rounded outline
+                            onClick={() => handleView(cellValues.row.id)}>
+                            <FaEye />
+                        </Button>
                         {
                             user.id === cellValues.row.createdBy.id ? (
                                 <Button color='primary' title='edit' rounded outline
