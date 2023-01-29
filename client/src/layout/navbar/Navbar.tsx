@@ -5,10 +5,10 @@ import { FaBars, FaSignOutAlt } from 'react-icons/fa'
 import { showToast, showNotif } from '@utils/toast'
 import { useTranslation } from 'react-i18next'
 import { Config } from '@config/Config'
-import { Button, Dropdown } from '@shared/components'
-import { DropdownItem } from '@shared/types'
-import { Account } from '@modules/users/models/Account'
+import { Dropdown } from '@shared/components'
 import logo from '../../assets/logo.png'
+import { NotificationsIcon } from '@modules/notifications'
+import { isManager } from '@utils/roles'
 
 
 
@@ -31,20 +31,13 @@ const Navbar = ({
         navigate('/login')
     }
 
-    useEffect(() => {
-        socket?.on('Notifications', data => {
-            console.log(data)
-        })
-    }, [])
-
-    const dropdownItems = (): DropdownItem[] => {
-        return [
-            {
-                label: 'Sign out',
-                action: onLogout
-            }
-        ]
-    }
+    const dropdownItems = [
+        {
+            id: 0,
+            label: 'Sign out',
+            onAction: onLogout
+        }
+    ]
     return (
         <header className="bg-slate-50 shadow-md h-16 flex items-center justify-center w-full border-b-2 border-b-gray-200">
             <div className="flex flex-grow items-center justify-between px-4 h-full">
@@ -73,10 +66,14 @@ const Navbar = ({
                     }
                 </ul>
                 <div className='flex items-center gap-4'>
+                    {
+                        isManager(user?.role) ? 
+                        <NotificationsIcon /> : null
+                    }
                     <Dropdown trigger={(
                         <span>{user?.displayName}</span>
                     )}
-                        items={dropdownItems()}
+                        list={dropdownItems} displayField="label" keyField='id'
                     />
                 </div>
 

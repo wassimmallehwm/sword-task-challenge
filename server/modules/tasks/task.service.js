@@ -31,7 +31,7 @@ class TaskService {
                 (this.nullOrEmpty(data.title) ||
                     this.nullOrEmpty(data.summary) ||
                     this.nullOrEmpty(createdBy)) ||
-                (data.isPerformed && this.nullOrEmpty(performedAt))
+                (data.isPerformed && this.nullOrEmpty(data.performedAt))
             )
                 return new ResponseError({
                     status: 400,
@@ -229,6 +229,7 @@ class TaskService {
 
     sendNotificationToManager = (task) => {
         if (task.isPerformed) {
+            console.log("Task performed")
             MessageBroker.sendMessage(NOTIFICATION_QUEUE, {
                 title: task.title,
                 performer: task.createdBy,

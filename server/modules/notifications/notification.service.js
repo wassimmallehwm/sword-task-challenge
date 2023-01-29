@@ -54,11 +54,11 @@ class NotificationsService {
                     ]
                 }
             }
-            const total = await Event.find(filter)
+            const total = await Notification.find(filter)
                 .count()
                 .exec();
 
-            let result = await Event.find(filter)
+            let result = await Notification.find(filter)
                 .skip((page - 1) * limit)
                 .limit(limit)
                 .sort('-_id')

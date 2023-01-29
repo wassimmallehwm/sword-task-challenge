@@ -6,8 +6,8 @@ const DateHandler = require("../../utils/date-handler/DateHandler")
 module.exports = (io) => {
     MessageBroker.consumeMessage(NOTIFICATION_QUEUE, (data) => {
         
-        const title = `The technician 
-        ${data.performer.firstname} ${data.performer.lastname} performed 
+        const title = `The technician \
+        ${data.performer.firstname} ${data.performer.lastname} performed \
         the task ${data.title} on ${DateHandler.formatDateTime(data.date)}`
 
         NotificationsService.sendNotificaton(io, {title}, MANAGER)

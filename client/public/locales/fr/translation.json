@@ -7,6 +7,7 @@
     "performedAt": "Effecuté à",
     "technician": "Technicien",
     "actions": "Actions",
+    "notification" : "Notification",
     "titles" : {
         "technicians": "Techniciens",
         "tasks": "Tâches",
@@ -33,5 +34,6 @@
     },
     "text" : {
         "confirmation": "Êtes-vous sûr de vouloir effectuer cette action ?"
-    }
+    },
+    "noData" : "Pas de données"
 }

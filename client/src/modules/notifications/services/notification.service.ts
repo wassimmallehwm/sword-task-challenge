@@ -1,4 +1,6 @@
+import { Page } from '@shared/types';
 import { BaseService } from '../../../shared/services/base.service';
+import { Notification } from '../models/notification';
 
 export class NotificationsService extends BaseService {
     SRC_URL = "notifications/";
@@ -11,12 +13,12 @@ export class NotificationsService extends BaseService {
         return `${this.SRC_URL}${apiUrl}`
     }
     
-    findTopFive(){
-        return this.httpClient(this.httpUrl('top-five'), "GET");
+    findTop(){
+        return this.httpClient<Page<Notification>>(this.httpUrl('list'), "GET", {limit: 5});
     }
     
     count(){
-        return this.httpClient(this.httpUrl('count'), "GET");
+        return this.httpClient<number>(this.httpUrl('count'), "GET");
     }
     
     read(id: string){
@@ -24,19 +26,7 @@ export class NotificationsService extends BaseService {
     }
 
     list(query?: any){
-        return this.httpClient(this.httpUrl('list'), "GET", query);
-    }
-
-    findOne(id: string){
-        return this.httpClient(this.httpUrl(id), 'GET');
-    }
-    
-    approve(id: string){
-        return this.httpClient(this.httpUrl(`approve/${id}`), "PUT", null);
-    }
-    
-    reject(id: string, comment: string){
-        return this.httpClient(this.httpUrl(`reject/${id}`), "PUT", {comment});
+        return this.httpClient<Page<Notification>>(this.httpUrl('list'), "GET", query);
     }
 
 }

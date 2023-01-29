@@ -1,17 +1,25 @@
 import { Menu, Transition } from '@headlessui/react'
-import { DropdownItem } from '@shared/types'
 import React, { Fragment, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 type DropdownProps = {
     trigger: ReactNode
-    items: DropdownItem[]
+    list: any[]
+    onAction?: any
+    keyField?: string
+    displayField?: string
 }
 
 const Dropdown = ({
     trigger,
-    items
+    list,
+    onAction,
+    keyField,
+    displayField
 }: DropdownProps) => {
+
+    const {t} = useTranslation()
 
     function classNames(...classes: any[]) {
         return classes.filter(Boolean).join(' ')
@@ -33,33 +41,39 @@ const Dropdown = ({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    {items.map((item) => (
-                        <Menu.Item key={item.label}>
-                            {({ active }) => {
-                                return item.isLink ? (
-                                    <Link
-                                        to={item.action}
-                                        className={classNames(
-                                            active ? 'bg-gray-100' : '',
-                                            'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
-                                        )}
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ) : (
+                <Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 min-w-[12rem] max-w-md w-max rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    {
+                        list && list.length > 0 ? list.map((item) => (
+                            <Menu.Item key={
+                                keyField && item[keyField] ?
+                                    item[keyField] :
+                                    item
+                            }>
+                                {({ active }) =>
                                     <div
-                                        onClick={item.action}
+                                        onClick={
+                                            item.onAction ?
+                                                item.onAction :
+                                                () => onAction(item)}
                                         className={classNames(
-                                            active ? 'bg-gray-100' : '',
-                                            'block px-4 py-2 text-sm text-gray-700 cursor-pointer'
+                                            item.active || active ? 'bg-gray-200' : '',
+                                            'block px-4 py-2 text-sm text-gray-700 cursor-pointer border-b border-b-gray-300 last:border-none'
                                         )}>
-                                        {item.component != undefined ? item.component : item.label}
+                                        {
+                                            displayField && item[displayField] ?
+                                                item[displayField] :
+                                                item
+                                        }
                                     </div>
-                                )
-                            }}
-                        </Menu.Item>
-                    ))}
+
+                                }
+                            </Menu.Item>
+                        )) : (
+                            <div className='flex items-center justify-center h-20'>
+                                {t('noData')}
+                            </div>
+                        )
+                    }
                 </Menu.Items>
             </Transition>
         </Menu>

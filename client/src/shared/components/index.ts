@@ -1,6 +1,5 @@
 import Button from "./Button";
 import Confirmation from "./Confirmation";
-import DataGrid from "./DataGrid";
 import DynamicIcon from "./DynamicIcon";
 import ErrorFallback from "./ErrorFallback";
 import Loader from "./Loader";
@@ -19,7 +18,6 @@ export {
   ErrorFallback,
   Modal,
   Spinner,
-  DataGrid,
   PageTitle,
   ProgressBar,
   NoData,
