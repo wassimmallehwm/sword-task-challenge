@@ -1,14 +1,23 @@
 const mongoose = require("mongoose");
 const passwordEncoder = require('../security/password-encoder/password-encoder');
-const User = require('../modules/auth/user.model')
-const data = require('./data.json');
+const User = require('../modules/users/user.model')
+const users = require('./users.json');
 const { DATABASE_URL } = require('../config');
 
-const createMockUsers = async (list) => {
+
+module.exports.createMockUsers = async () => {
     try{
         await mongoose.connect(DATABASE_URL);
-        for (let index = 0; index < list.length; index++) {
-            let {email, username, firstname, lastname, password, role} = list[index]
+
+        //Check if users already created
+        const count = await User.count()
+        if(count != undefined && count > 0){
+            console.log("Users data already initialized")
+            return ;
+        }
+
+        for (let index = 0; index < users.length; index++) {
+            let {email, username, firstname, lastname, password, role} = users[index]
             password = await passwordEncoder.hash(password)
             const item = new User({
                 email,
@@ -20,14 +29,10 @@ const createMockUsers = async (list) => {
             });
             await item.save();
         }
-        console.log("Data inserted")
+        console.log("Users data inserted")
         await mongoose.connection.close();
     } catch(error){
         await mongoose.connection.close();
-        console.error(error);
+        console.error("Could not seed database", error);
     }
 }
-
-createMockUsers(data)
-.then(() => console.log("success"))
-.catch((error) => console.error(error))

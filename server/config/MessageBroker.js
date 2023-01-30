@@ -3,21 +3,10 @@ const { CLOUDAMQP_URL } = require('./index')
 
 class MessageBroker {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new MessageBroker()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new MessageBroker();
 
     consumeMessage = async (queue, callback) => {
         const connection = await amqplib.connect(CLOUDAMQP_URL)
@@ -41,4 +30,4 @@ class MessageBroker {
 
 }
 
-module.exports = MessageBroker.getInstance()
+module.exports = MessageBroker.instance

@@ -3,21 +3,10 @@ const { JWT_SECRET, JWT_REFRESH_EXPIRATION, JWT_ACCESS_EXPIRATION } = require(".
 
 class JwtService {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new JwtService()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new JwtService();
 
     generateToken = (
         {
@@ -49,4 +38,4 @@ class JwtService {
 
 }
 
-module.exports = JwtService.getInstance()
+module.exports = JwtService.instance

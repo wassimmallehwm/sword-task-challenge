@@ -1,0 +1,32 @@
+[
+    {
+        "_id": {
+            "$oid": "63d4c34zbf8c5aab3cc4341a"
+        },
+        "email": "manager11@mail.com",
+        "username": "manager11",
+        "firstname": "manager11",
+        "lastname": "manager11",
+        "password": "$2a$10$gD9SybDbQfcv/R.83yY8.Of8wsWOWtav5e7T1qg9b2/Rq34Uixk.q",
+        "role": "Manager",
+        "createdAt": {
+            "$date": "2023-01-28T06:40:11.544Z"
+        },
+        "updatedAt": {
+            "$date": "2023-01-28T06:40:11.544Z"
+        },
+        "__v": 0
+    },
+    {
+        "_id": "63d405ee6462b0e932555108",
+        "email": "manager12@mail.com",
+        "username": "manager12",
+        "firstname": "manager12",
+        "lastname": "manager12",
+        "password": "$2a$10$/hyZOh8NQKiNnunnyMK9B.h2kpnSXcsA0YA2rqxXszFpiLYUa5Sem",
+        "role": "Manager",
+        "createdAt": "2023-01-27T17:12:14.489Z",
+        "updatedAt": "2023-01-27T17:12:14.489Z",
+        "__v": 0
+    }
+]

@@ -1,19 +1,8 @@
 class ErrorsHandler {
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new ErrorsHandler()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new ErrorsHandler();
 
     handle = (err, trace = "") => {
         console.error(`${trace} => ${err}`)
@@ -40,4 +29,4 @@ class ErrorsHandler {
 
 }
 
-module.exports = ErrorsHandler.getInstance();
+module.exports = ErrorsHandler.instance;

@@ -8,21 +8,10 @@ const UserDto = require("../users/user.dto");
 
 class AuthService {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new AuthService()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new AuthService();
 
     authenticate = async ({ username, password }) => {
         try {
@@ -89,4 +78,4 @@ class AuthService {
     }
 }
 
-module.exports = AuthService.getInstance()
+module.exports = AuthService.instance

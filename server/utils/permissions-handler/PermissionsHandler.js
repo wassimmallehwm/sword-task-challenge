@@ -1,21 +1,10 @@
 const { MANAGER, TECHNICIAN } = require("../../constants");
 
 class PermissionsHandler {
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new PermissionsHandler()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new PermissionsHandler();
 
     isManager = (user) => {
         return user && user.role && user.role == MANAGER;
@@ -27,4 +16,4 @@ class PermissionsHandler {
 
 }
 
-module.exports = PermissionsHandler.getInstance();
+module.exports = PermissionsHandler.instance;

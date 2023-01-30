@@ -8,21 +8,10 @@ SERVICE_NAME = "UserService"
 
 class UserService {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new UserService()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new UserService();
 
     findAllPaginated = async ({ page, limit, filterModel, sortModel }) => {
         try {
@@ -62,4 +51,4 @@ class UserService {
     }
 }
 
-module.exports = UserService.getInstance()
+module.exports = UserService.instance

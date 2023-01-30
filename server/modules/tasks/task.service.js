@@ -9,21 +9,10 @@ const SERVICE_NAME = "TaskService"
 
 class TaskService {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new TaskService()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new TaskService();
 
     create = async (data, createdBy) => {
         try {
@@ -165,11 +154,6 @@ class TaskService {
                     status: 404,
                     message: "Task not found !"
                 })
-            if (!isManager(user))
-                return new ResponseError({
-                    status: 403,
-                    message: "Permission denied !"
-                })
             const result = await Task.deleteOne({ _id: id });
 
             return new ResponseSuccess({
@@ -196,4 +180,4 @@ class TaskService {
     }
 }
 
-module.exports = TaskService.getInstance()
+module.exports = TaskService.instance

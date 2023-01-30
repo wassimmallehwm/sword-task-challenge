@@ -118,5 +118,85 @@
         "lastname": "technician10",
         "password": "technician10",
         "role": "Technician"
+    },
+    {
+        "username": "technician11",
+        "email": "technician11@mail.com",
+        "firstname": "technician11",
+        "lastname": "technician11",
+        "password": "technician11",
+        "role": "Technician"
+    },
+    {
+        "username": "technician12",
+        "email": "technician12@mail.com",
+        "firstname": "technician12",
+        "lastname": "technician12",
+        "password": "technician12",
+        "role": "Technician"
+    },
+    {
+        "username": "technician13",
+        "email": "technician13@mail.com",
+        "firstname": "technician13",
+        "lastname": "technician13",
+        "password": "technician13",
+        "role": "Technician"
+    },
+    {
+        "username": "technician14",
+        "email": "technician14@mail.com",
+        "firstname": "technician14",
+        "lastname": "technician14",
+        "password": "technician14",
+        "role": "Technician"
+    },
+    {
+        "username": "technician15",
+        "email": "technician15@mail.com",
+        "firstname": "technician15",
+        "lastname": "technician15",
+        "password": "technician15",
+        "role": "Technician"
+    },
+    {
+        "username": "technician16",
+        "email": "technician16@mail.com",
+        "firstname": "technician16",
+        "lastname": "technician16",
+        "password": "technician16",
+        "role": "Technician"
+    },
+    {
+        "username": "technician17",
+        "email": "technician17@mail.com",
+        "firstname": "technician17",
+        "lastname": "technician17",
+        "password": "technician17",
+        "role": "Technician"
+    },
+    {
+        "username": "technician18",
+        "email": "technician18@mail.com",
+        "firstname": "technician18",
+        "lastname": "technician18",
+        "password": "technician18",
+        "role": "Technician"
+    },
+    {
+        "username": "technician19",
+        "email": "technician19@mail.com",
+        "firstname": "technician19",
+        "lastname": "technician19",
+        "password": "technician19",
+        "role": "Technician"
+    },
+    {
+        "username": "technician20",
+        "email": "technician20@mail.com",
+        "firstname": "technician20",
+        "lastname": "technician20",
+        "password": "technician20",
+        "role": "Technician"
     }
 ]

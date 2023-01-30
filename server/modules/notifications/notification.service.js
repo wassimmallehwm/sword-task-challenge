@@ -7,21 +7,10 @@ const SERVICE_NAME = "NotificationsService"
 
 class NotificationsService {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new NotificationsService()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new NotificationsService();
 
     save = async (data) => {
         try {
@@ -111,4 +100,4 @@ class NotificationsService {
     }
 }
 
-module.exports = NotificationsService.getInstance()
+module.exports = NotificationsService.instance

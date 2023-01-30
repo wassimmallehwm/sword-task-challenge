@@ -7,6 +7,6 @@ router.get('/count', authenticated, manager, countUnread);
 
 router.get('/read/:id', authenticated, manager, read);
 
-router.get('/list', authenticated, manager, getList);
+router.get('/', authenticated, manager, getList);
 
 module.exports = router;

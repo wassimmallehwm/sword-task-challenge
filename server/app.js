@@ -5,6 +5,7 @@ const { Server } = require("socket.io");
 require('dotenv').config();
 
 const dbConnect = require('./database');
+const { createMockUsers } = require('./database/seed');
 const { expressMiddelwares } = require('./middleware');
 const ioConfig = require('./socket');
 
@@ -19,6 +20,9 @@ require('./modules/notifications/notification.consumer')(io)
 expressMiddelwares(app, __dirname);
 dbConnect();
 ioConfig(io)
+
+//For testing purposes : create fake users data
+createMockUsers()
 
 module.exports = {
     server,

@@ -2,21 +2,10 @@ const bcrypt = require('bcryptjs');
 
 class PasswordEncoder {
 
-    instance;
-
     constructor() {
     }
 
-    static createInstance() {
-        return new PasswordEncoder()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new PasswordEncoder();
 
     hash = async (password) => {
         const salt = await bcrypt.genSalt()
@@ -31,4 +20,4 @@ class PasswordEncoder {
 
 }
 
-module.exports = PasswordEncoder.getInstance()
+module.exports = PasswordEncoder.instance

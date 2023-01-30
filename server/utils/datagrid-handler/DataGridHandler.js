@@ -1,20 +1,10 @@
 
 class DataGridHandler {
-    instance;
-
+    
     constructor() {
     }
 
-    static createInstance() {
-        return new DataGridHandler()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new DataGridHandler();
 
     sortHadnler = (sortModel) => {
         let result = {}
@@ -81,4 +71,4 @@ class DataGridHandler {
     }
 }
 
-module.exports = DataGridHandler.getInstance();
+module.exports = DataGridHandler.instance;
