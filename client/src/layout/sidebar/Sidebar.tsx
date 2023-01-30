@@ -5,7 +5,6 @@ import logo from '@assets/logo.png'
 import { useTranslation } from 'react-i18next'
 import { FaTimes } from 'react-icons/fa'
 import { Config } from '@config/Config'
-import { APP_NAME } from '@config/const'
 
 interface SidebarProps {
   isOpen: boolean

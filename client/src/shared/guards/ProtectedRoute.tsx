@@ -1,4 +1,4 @@
-import { Loader } from '@shared/components';
+import { Spinner } from '@shared/components';
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../contexts';
@@ -24,7 +24,7 @@ const ProtectedRoute = ({ roles, children }: any) => {
   }, [children])
 
   return loading ? (
-    <Loader/>
+    <Spinner/>
   ) : children;
 }
 

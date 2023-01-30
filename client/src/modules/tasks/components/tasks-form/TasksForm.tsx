@@ -1,7 +1,3 @@
-import { Task } from '@modules/tasks/models/task'
-import { DateTimePicker } from '@mui/x-date-pickers'
-import { Input, Toggle } from '@shared/components/form'
-import { formatDateTimeToInput } from '@utils/dateFormat'
 import React from 'react'
 import { FieldValues, UseFormRegister } from 'react-hook-form'
 import { FieldErrorsImpl } from 'react-hook-form/dist/types/errors'
@@ -31,10 +27,10 @@ const TasksForm = React.forwardRef(({
                 <input type="text" {...register('title')}
                     className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
                     focus:outline-none focus:ring-1 bg-white py-1 px-2 border 
-                    ${errors.title ? 'border-red-700' : 'border-gray-300'}`} />
+                    ${errors.title ? 'border-secondary-600' : 'border-gray-300'}`} />
                 {
                     errors.title ?
-                        <div className="text-red-700">
+                        <div className="text-secondary-600">
                             {errors.title?.message?.toString()}
                         </div>
                         : null
