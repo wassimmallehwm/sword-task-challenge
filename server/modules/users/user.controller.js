@@ -15,7 +15,7 @@ module.exports.list = async(req, res) => {
         limit: parseInt(limit, 10),
         filterModel,
         sortModel
-      }, req.user)
+      }, req.user, req)
       res.status(status).json(success ? content : { message });
     } catch (err) {
       const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:list`)

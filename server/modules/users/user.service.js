@@ -4,6 +4,7 @@ const User = require("./user.model");
 const UserDto = require("./user.dto");
 const { TECHNICIAN } = require("../../constants");
 const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
+const RedisCaching = require("../../config/RedisCaching");
 
 SERVICE_NAME = "UserService"
 
@@ -27,7 +28,8 @@ class UserService {
 
     findAllPaginated = async (
         { page, limit, filterModel, sortModel },
-        user
+        user,
+        req
     ) => {
         try {
             let filter = DataGridHandler.filterHandler(filterModel)
@@ -50,15 +52,17 @@ class UserService {
                 .exec();
             result = result.map(elem => new UserDto(elem))
             if (result) {
+                const content = {
+                    page,
+                    limit,
+                    total,
+                    pages: Math.ceil(total / limit),
+                    docs: result
+                }
+                RedisCaching.cacheData(req, content)
                 return new ResponseSuccess({
                     status: 200,
-                    content: {
-                        page,
-                        limit,
-                        total,
-                        pages: Math.ceil(total / limit),
-                        docs: result
-                    }
+                    content
                 })
             }
         } catch (err) {

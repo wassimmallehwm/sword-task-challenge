@@ -25,5 +25,6 @@ module.exports = {
     CLOUDAMQP_URL: process.env.CLOUDAMQP_URL || 'amqp://localhost:5672',
 
     //Redis config
-    REDIS_CACHE_DURATION: 60 * 60 * 60 * 24
+    //cache duration : sec * min * hour
+    REDIS_CACHE_DURATION: 60 * 60 * 1
 }
