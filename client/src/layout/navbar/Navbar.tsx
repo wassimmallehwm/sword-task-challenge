@@ -50,7 +50,7 @@ const Navbar = ({
                         <FaBars className="text-black" size="25px" />
                     </button>
                     <Link to="/">
-                        <img src={logo} className="h-14 m-auto" alt="logo" />
+                        <img src={logo} className="h-16 m-auto" alt="logo" />
                     </Link>
                 </div>
                 <ul className='hidden md:flex items-center justify-center h-full'>

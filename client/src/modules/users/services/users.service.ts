@@ -23,7 +23,7 @@ class UsersService extends BaseService {
     }
 
     list(query?: any){
-        return this.httpClient<Page<Account>>(this.httpUrl('list'), "GET", query);
+        return this.httpClient<Page<Account>>(this.httpUrl('list'), "POST", query);
     }
 
     findOne(id: string){

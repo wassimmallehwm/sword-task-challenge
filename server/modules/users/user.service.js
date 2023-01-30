@@ -1,5 +1,5 @@
 const { ResponseError, ResponseSuccess } = require("../../shared/response");
-const { ErrorsHandler } = require('../../utils');
+const { ErrorsHandler, DataGridHandler } = require('../../utils');
 const User = require("./user.model");
 const UserDto = require("./user.dto");
 const { TECHNICIAN } = require("../../constants");
@@ -26,13 +26,14 @@ class UserService {
     }
 
     findAllPaginated = async (
-        { page, limit },
+        { page, limit, filterModel, sortModel },
         user
     ) => {
         try {
-            let filter = {
-                role: TECHNICIAN
-            }
+            let filter = DataGridHandler.filterHandler(filterModel)
+            let sort = DataGridHandler.sortHadnler(sortModel)
+            filter.role = TECHNICIAN
+
             if (!isManager(user))
                 return new ResponseError({
                     status: 403,
@@ -45,7 +46,7 @@ class UserService {
             let result = await User.find(filter)
                 .skip((page - 1) * limit)
                 .limit(limit)
-                //.sort({ [sortField]: sortOrder })
+                .sort(sort)
                 .exec();
             result = result.map(elem => new UserDto(elem))
             if (result) {

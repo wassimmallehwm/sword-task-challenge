@@ -39,7 +39,7 @@ const Columns = ({
                 <FaTimes className='text-secondary-600' />
         },
         {
-            field: 'performedAt', headerName: t('performedAt'), minWidth: 100, flex: true, type: 'boolean',
+            field: 'performedAt', headerName: t('performedAt'), minWidth: 100, flex: true, type: 'dateTime',
             renderCell: (cellValues: GridValueGetterParams) => formateDateTime(cellValues.row.performedAt)
         },
         {

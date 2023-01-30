@@ -18,25 +18,9 @@ module.exports.create = async(req, res) => {
   }
 };
 
-module.exports.getAll = async(req, res) => {
-  try {
-    const query = req.query || {};
-    const {
-      success,
-      status,
-      content,
-      message
-    } = await TaskService.findAll(query, req.user)
-    res.status(status).json(success ? content : { message });
-  } catch (err) {
-    const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:getAll`)
-    res.status(status).json({ message, entity: ENTITY_NAME })
-  }
-};
-
 module.exports.list = async(req, res) => {
   try {
-    const { page = 1, limit = 10, sortField = "_id", sortOrder = 1, search } = req.query;
+    const { page = 1, limit = 10, filterModel, sortModel } = req.body;
     const {
       success,
       status,
@@ -45,29 +29,12 @@ module.exports.list = async(req, res) => {
     } = await TaskService.findAllPaginated({
       page: parseInt(page, 10),
       limit: parseInt(limit, 10),
-      sortField,
-      sortOrder,
-      search
+      filterModel,
+      sortModel
     }, req.user)
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:list`)
-    res.status(status).json({ message, entity: ENTITY_NAME })
-  }
-};
-
-module.exports.getById = async(req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      success,
-      status,
-      content,
-      message
-    } = await TaskService.findById(id, req.user)
-    res.status(status).json(success ? content : { message });
-  } catch (err) {
-    const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:getById`)
     res.status(status).json({ message, entity: ENTITY_NAME })
   }
 };

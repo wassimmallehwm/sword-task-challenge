@@ -15,8 +15,7 @@ const expressMiddelwares = (app, dir) => {
       "content-type",
       ACCESS_TOKEN,
       REFRESH_TOKEN,
-      "responsetype",
-      "headers"
+      "responsetype"
     ],
     preflightContinue: true
   }));
@@ -27,11 +26,11 @@ const expressMiddelwares = (app, dir) => {
 
 
   const modulesPath = path.join(dir, 'modules');
-  fs.readdir(modulesPath, function (err, modulesList) {
+  fs.readdir(modulesPath, (err, modulesList) => {
     if (err) {
       return console.log('Unable to scan modules directory: ' + err);
     }
-    modulesList.forEach(function (mod) {
+    modulesList.forEach((mod) => {
       app.use(`/api/${mod}`, require(`../modules/${mod}`).routes)
     });
   });

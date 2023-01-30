@@ -30,7 +30,8 @@
         "delete": "{{res}} supprimée avec succès"
     },
     "validation": {
-        "required": "{{field}} est obligatoire"
+        "required": "{{field}} est obligatoire",
+        "maxLength": "{{field}} ne devra pas dépasser {{max}} caractères"
     },
     "text" : {
         "confirmation": "Êtes-vous sûr de vouloir effectuer cette action ?"

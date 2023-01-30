@@ -4,7 +4,7 @@ const ENTITY_NAME = "User"
 
 module.exports.list = async(req, res) => {
     try {
-      const { page = 1, limit = 10, sortField = "_id", sortOrder = 1, search } = req.query;
+      const { page = 1, limit = 10, filterModel, sortModel } = req.body;
       const {
         success,
         status,
@@ -13,9 +13,8 @@ module.exports.list = async(req, res) => {
       } = await UserService.findAllPaginated({
         page: parseInt(page, 10),
         limit: parseInt(limit, 10),
-        sortField,
-        sortOrder,
-        search
+        filterModel,
+        sortModel
       }, req.user)
       res.status(status).json(success ? content : { message });
     } catch (err) {

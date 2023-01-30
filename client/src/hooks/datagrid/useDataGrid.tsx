@@ -25,8 +25,8 @@ function useDataGrid({
     columns,
     loading
 }: DatagridProps) {
-    const [pageSize, setPageSize] = useState<number>(10);
-    const [pageNumber, setPageNumber] = useState<number>(0);
+    const [limit, setLimit] = useState<number>(10);
+    const [page, setPage] = useState<number>(0);
     const [rowCount, editRowCount] = useState<number>(0);
     const [filterModel, editFilterModel] = useState<GridFilterItem[]>();
     const [sortModel, setSortModel] = useState<GridSortModel>();
@@ -34,7 +34,7 @@ function useDataGrid({
     const setRowCount = (data: number) => editRowCount(data)
     const setFilterModel = (model: GridFilterModel) => {
         const data = model.items.filter(elem => elem.value && elem.value.trim() != '')
-        console.log(model.items)
+        console.log("FILTER MODEL", data)
         editFilterModel(data)
     }
 
@@ -141,18 +141,18 @@ function useDataGrid({
                 columns={gridColumns}
                 //checkboxSelection
                 disableSelectionOnClick
-                pageSize={pageSize}
-                onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+                pageSize={limit}
+                onPageSizeChange={(newPageSize) => setLimit(newPageSize)}
                 rowsPerPageOptions={[10, 15, 25]}
                 pagination
                 paginationMode='server'
                 filterMode='server'
                 sortingMode='server'
                 loading={loading}
-                onPageChange={(page) => setPageNumber(page)}
+                onPageChange={(page) => setPage(page)}
                 components={{ Toolbar: GridToolbar }}
                 onFilterModelChange={setFilterModel}
-                onSortModelChange={(model, details) => setSortModel(model)}
+                onSortModelChange={(model, details) => {setSortModel(model); console.log("SORT MODEL", model)}}
                 rowCount={rowCount}
                 componentsProps={componentsProps}
             />
@@ -160,15 +160,15 @@ function useDataGrid({
     )
 
     return {
-        pageSize,
-        pageNumber,
+        limit,
+        page: page + 1,
         rowCount,
         filterModel,
         sortModel,
         setRowCount,
         grid,
-        params: { pageSize, pageNumber, filterModel, sortModel },
-        effectParams: [ pageSize, pageNumber, filterModel, sortModel ]
+        params: { limit, page: page + 1, filterModel, sortModel },
+        effectParams: [ limit, page + 1, filterModel, sortModel ]
     }
 }
 

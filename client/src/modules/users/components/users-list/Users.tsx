@@ -19,7 +19,7 @@ const Users = () => {
     const getUsers = async () => {
         setLoading(true)
         try {
-            const { data } = await usersService.list({ });
+            const { data } = await usersService.list(dataGrid.params);
             setAccounts(data.docs)
             dataGrid.setRowCount(data.total)
         } catch (error: any) {

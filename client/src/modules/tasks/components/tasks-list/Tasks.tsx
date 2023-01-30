@@ -16,6 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { formatDateTimeToInput } from '@utils/dateFormat'
 import TasksView from '../tasks-view/TasksView'
+import validationSchema from '@modules/tasks/validation/schema'
 
 const Tasks = () => {
     const { user } = useContext(AuthContext)
@@ -25,19 +26,6 @@ const Tasks = () => {
     const [task, setTask] = useState<Task>(InitTask);
     const [deleteTask, setDeleteTask] = useState<string|null>(null);
     const [loading, setLoading] = useState<boolean>(false);
-    const validationSchema = Yup.object().shape({
-        title: Yup.string()
-            .required(t('validation.required', { field: t('title') })),
-        summary: Yup.string()
-            .required(t('validation.required', { field: t('summary') })),
-        isPerformed: Yup.boolean(),
-        performedAt: Yup.string()
-            .when("isPerformed", {
-                is: true,
-                then: Yup.string().required(t('validation.required', { field: t('performedAt') }))
-            })
-
-    });
     const formOptions = { resolver: yupResolver(validationSchema) };
 
     const {
@@ -56,7 +44,7 @@ const Tasks = () => {
     const getTasks = async () => {
         setLoading(true)
         try {
-            const { data } = await TasksService.list({});
+            const { data } = await TasksService.list(dataGrid.params);
             setTasks(data.docs)
             dataGrid.setRowCount(data.total)
         } catch (error: any) {
