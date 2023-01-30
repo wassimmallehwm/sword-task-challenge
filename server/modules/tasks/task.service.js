@@ -5,7 +5,6 @@ const MessageBroker = require('../../config/MessageBroker')
 const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
 const { NOTIFICATION_QUEUE } = require("../../constants");
 const UserDto = require("../users/user.dto");
-const RedisCaching = require("../../config/RedisCaching");
 const SERVICE_NAME = "TaskService"
 
 class TaskService {
@@ -54,8 +53,8 @@ class TaskService {
                     model: 'User',
                     select: 'email username firstname lastname role'
                 });
-            this.sendNotificationToManager(result)
             if (result) {
+                this.sendNotificationToManager(result)
                 return new ResponseSuccess({
                     status: 201,
                     content: result
@@ -69,8 +68,7 @@ class TaskService {
 
     findAllPaginated = async (
         { page, limit, filterModel, sortModel },
-        user,
-        req
+        user
     ) => {
         try {
             let filter = DataGridHandler.filterHandler(filterModel)
@@ -94,17 +92,15 @@ class TaskService {
                 return { ...elem.toJSON(), createdBy: new UserDto(elem.createdBy) }
             })
             if (result) {
-                const content = {
-                    page,
-                    limit,
-                    total,
-                    pages: Math.ceil(total / limit),
-                    docs: result
-                }
-                RedisCaching.cacheData(req, content)
                 return new ResponseSuccess({
                     status: 200,
-                    content
+                    content: {
+                        page,
+                        limit,
+                        total,
+                        pages: Math.ceil(total / limit),
+                        docs: result
+                    }
                 })
             }
         } catch (err) {
@@ -191,10 +187,9 @@ class TaskService {
 
     sendNotificationToManager = (task) => {
         if (task.isPerformed) {
-            console.log("Task performed")
             MessageBroker.sendMessage(NOTIFICATION_QUEUE, {
-                title: task.title,
-                performer: task.createdBy,
+                task: task.title,
+                user: `${task.createdBy.firstname} ${task.createdBy.lastname}`,
                 date: task.performedAt
             })
         }

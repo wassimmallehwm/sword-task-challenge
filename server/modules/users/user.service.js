@@ -3,8 +3,6 @@ const { ErrorsHandler, DataGridHandler } = require('../../utils');
 const User = require("./user.model");
 const UserDto = require("./user.dto");
 const { TECHNICIAN } = require("../../constants");
-const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
-const RedisCaching = require("../../config/RedisCaching");
 
 SERVICE_NAME = "UserService"
 
@@ -26,21 +24,11 @@ class UserService {
         return this.instance
     }
 
-    findAllPaginated = async (
-        { page, limit, filterModel, sortModel },
-        user,
-        req
-    ) => {
+    findAllPaginated = async ({ page, limit, filterModel, sortModel }) => {
         try {
             let filter = DataGridHandler.filterHandler(filterModel)
             let sort = DataGridHandler.sortHadnler(sortModel)
             filter.role = TECHNICIAN
-
-            if (!isManager(user))
-                return new ResponseError({
-                    status: 403,
-                    message: "Permission denied !"
-                })
             const total = await User.find(filter)
                 .count()
                 .exec();
@@ -50,19 +38,17 @@ class UserService {
                 .limit(limit)
                 .sort(sort)
                 .exec();
-            result = result.map(elem => new UserDto(elem))
             if (result) {
-                const content = {
-                    page,
-                    limit,
-                    total,
-                    pages: Math.ceil(total / limit),
-                    docs: result
-                }
-                RedisCaching.cacheData(req, content)
+                result = result.map(elem => new UserDto(elem))
                 return new ResponseSuccess({
                     status: 200,
-                    content
+                    content:{
+                        page,
+                        limit,
+                        total,
+                        pages: Math.ceil(total / limit),
+                        docs: result
+                    }
                 })
             }
         } catch (err) {

@@ -1,6 +1,6 @@
 const Notification = require("./notification.model");
 const { ResponseSuccess, ResponseError } = require("../../shared/response");
-const { ErrorsHandler } = require("../../utils");
+const { ErrorsHandler, DataGridHandler } = require("../../utils");
 const { NOTIFICATION_QUEUE } = require("../../constants");
 
 const SERVICE_NAME = "NotificationsService"
@@ -26,7 +26,7 @@ class NotificationsService {
     save = async (data) => {
         try {
             const item = new Notification(data);
-            const result = await item.save();
+            let result = await item.save();
             return result;
         } catch (err) {
             return new ResponseError(
@@ -44,15 +44,12 @@ class NotificationsService {
         }
     }
 
-    findAllPaginated = async ({ page, limit, search }) => {
+    findAllPaginated = async ({ page, limit, filterModel, sortModel }) => {
         try {
-            let filter = {}
-            if (search && search.trim() !== "") {
-                filter = {
-                    $or: [
-                        { title: { $regex: search, $options: 'i' } }
-                    ]
-                }
+            let filter = DataGridHandler.filterHandler(filterModel)
+            let sort = DataGridHandler.sortHadnler(sortModel)
+            if(Object.entries(sort).length == 0){
+                sort._id = -1
             }
             const total = await Notification.find(filter)
                 .count()
@@ -61,9 +58,8 @@ class NotificationsService {
             let result = await Notification.find(filter)
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .sort('-_id')
+                .sort(sort)
                 .exec();
-
             if (result) {
                 return new ResponseSuccess({
                     status: 200,
@@ -86,7 +82,7 @@ class NotificationsService {
     countUnread = async () => {
         try {
             const result = await Notification.find({ read: false }).count();
-            if (result) {
+            if (result !== undefined) {
                 return new ResponseSuccess({
                     status: 200,
                     content: result

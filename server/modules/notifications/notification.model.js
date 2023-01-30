@@ -1,8 +1,16 @@
 const mongoose = require('mongoose');
 
 const NotificationSchema = new mongoose.Schema({
-    title: {
+    user: {
         type: String,
+        required: true
+    },
+    task: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
         required: true
     },
     read: {

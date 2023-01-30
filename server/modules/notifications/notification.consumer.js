@@ -4,12 +4,8 @@ const { MANAGER, NOTIFICATION_QUEUE } = require("../../constants")
 const {DateHandler} = require("../../utils")
 
 module.exports = (io) => {
-    MessageBroker.consumeMessage(NOTIFICATION_QUEUE, (data) => {
-        
-        const title = `The technician \
-        ${data.performer.firstname} ${data.performer.lastname} performed \
-        the task ${data.title} on ${DateHandler.formatDateTime(data.date)}`
+    MessageBroker.consumeMessage(NOTIFICATION_QUEUE, data => {
 
-        NotificationsService.sendNotificaton(io, {title}, MANAGER)
+        NotificationsService.sendNotificaton(io, data, MANAGER)
     })
 }

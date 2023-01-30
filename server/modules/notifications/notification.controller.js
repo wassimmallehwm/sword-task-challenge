@@ -36,18 +36,18 @@ module.exports.read = async (req, res) => {
 
 module.exports.getList = async (req, res) => {
   try {
-    const { page = 1, limit = 20, search } = req.query;
-    const params = {
-      page: parseInt(page, 10),
-      limit: parseInt(limit, 10),
-      search
-    };
+    const { page = 1, limit = 10, filterModel, sortModel } = req.body;
     const {
       success,
       status,
       content,
       message
-    } = await NotificationsService.findAllPaginated(params);
+    } = await NotificationsService.findAllPaginated({
+      page: parseInt(page, 10),
+      limit: parseInt(limit, 10),
+      filterModel,
+      sortModel
+    });
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:getList`)

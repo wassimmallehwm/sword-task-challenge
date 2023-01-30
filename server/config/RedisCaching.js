@@ -1,29 +1,19 @@
 const redis = require("redis");
+//const RedisPool = require("redis-pool");
 const { REDIS_CACHE_DURATION } = require(".");
 const { ErrorsHandler } = require("../utils");
 
 class RedisCaching {
-
-    instance;
     redisClient;
 
     constructor() {
+        //this.redisClient = new RedisPool(redis.createClient())
     }
 
-    static createInstance() {
-        return new RedisCaching()
-    }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = this.createInstance()
-        }
-        return this.instance
-    }
+    static instance = new RedisCaching();
 
     connect = async () => {
-        this.redisClient = redis.createClient();
-
+        this.redisClient = redis.createClient()
         this.redisClient.on("error", (error) => console.error(`Error : ${error}`));
         this.redisClient.on('connection', (stream) => {
             console.log('Redis connected!');
@@ -32,10 +22,14 @@ class RedisCaching {
     }
 
     cacheData = async (req, data) => {
-        await this.redisClient.set(this.formatKey(req), JSON.stringify(data), {
-            EX: REDIS_CACHE_DURATION,
-            NX: true,
-        });
+        try {
+            await this.redisClient.set(this.formatKey(req), JSON.stringify(data), {
+                EX: REDIS_CACHE_DURATION,
+                NX: true,
+            });
+        } catch (error) {
+            console.log("Cannot cache data : ", error)
+        }
     }
 
     getCachedData = async (req, res, next) => {
@@ -55,8 +49,29 @@ class RedisCaching {
         }
     }
 
+    invalidateCache = async (req) => {
+        const pattern = req.originalUrl.split('/')[2] + '*'
+        let _cursor = 0;
+        let _keys = [];
+        try {
+            do {
+                const { cursor, keys } = await this.redisClient.scan(_cursor, "MATCH", pattern, "COUNT", 100)
+                _cursor = parseInt(cursor, 10);
+                _keys = _keys.concat(keys);
+            } while (_cursor !== 0);
+
+            if (_keys && _keys.length > 0) {
+                await this.redisClient.del(_keys)
+                console.log("Cache invalidated")
+            }
+        } catch (error) {
+            console.log("Cannot invalidate redis cache : ", error)
+        }
+
+    }
+
     formatKey = (req) => {
-        return req.originalUrl +
+        return req.originalUrl.split('/')[2] + ":" +
             this.stringify(req.user._id) +
             this.stringify(req.params) +
             this.stringify(req.body) +
@@ -69,4 +84,4 @@ class RedisCaching {
 
 }
 
-module.exports = RedisCaching.getInstance()
+module.exports = RedisCaching.instance

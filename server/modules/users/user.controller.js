@@ -1,3 +1,4 @@
+const RedisCaching = require("../../config/RedisCaching");
 const UserService = require("./user.service");
 const SERVICE_NAME = "UserController"
 const ENTITY_NAME = "User"
@@ -15,7 +16,10 @@ module.exports.list = async(req, res) => {
         limit: parseInt(limit, 10),
         filterModel,
         sortModel
-      }, req.user, req)
+      })
+      if (success) {
+        RedisCaching.cacheData(req, content)
+      }
       res.status(status).json(success ? content : { message });
     } catch (err) {
       const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:list`)

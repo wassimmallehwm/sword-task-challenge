@@ -1,9 +1,10 @@
+const RedisCaching = require("../../config/RedisCaching");
 const { ErrorsHandler } = require("../../utils");
 const TaskService = require("./task.service");
 const SERVICE_NAME = "TaskController"
 const ENTITY_NAME = "Task"
-      
-module.exports.create = async(req, res) => {
+
+module.exports.create = async (req, res) => {
   try {
     const {
       success,
@@ -11,6 +12,9 @@ module.exports.create = async(req, res) => {
       content,
       message
     } = await TaskService.create(req.body, req.user._id)
+    if (success) {
+      RedisCaching.invalidateCache(req)
+    }
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:create`)
@@ -18,7 +22,7 @@ module.exports.create = async(req, res) => {
   }
 };
 
-module.exports.list = async(req, res) => {
+module.exports.list = async (req, res) => {
   try {
     const { page = 1, limit = 10, filterModel, sortModel } = req.body;
     const {
@@ -31,7 +35,10 @@ module.exports.list = async(req, res) => {
       limit: parseInt(limit, 10),
       filterModel,
       sortModel
-    }, req.user, req)
+    }, req.user)
+    if (success) {
+      RedisCaching.cacheData(req, content)
+    }
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:list`)
@@ -39,7 +46,7 @@ module.exports.list = async(req, res) => {
   }
 };
 
-module.exports.update = async(req, res) => {
+module.exports.update = async (req, res) => {
   try {
     const {
       success,
@@ -47,7 +54,9 @@ module.exports.update = async(req, res) => {
       content,
       message
     } = await TaskService.update(req.params.id, req.body, req.user)
-
+    if (success) {
+      RedisCaching.invalidateCache(req)
+    }
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:update`)
@@ -55,7 +64,7 @@ module.exports.update = async(req, res) => {
   }
 };
 
-module.exports.remove = async(req, res) => {
+module.exports.remove = async (req, res) => {
   try {
     const {
       success,
@@ -63,7 +72,9 @@ module.exports.remove = async(req, res) => {
       content,
       message
     } = await TaskService.delete(req.params.id, req.user)
-
+    if (success) {
+      RedisCaching.invalidateCache(req)
+    }
     res.status(status).json(success ? content : { message });
   } catch (err) {
     const { status, message } = ErrorsHandler.handle(err, `${SERVICE_NAME}:delete`)
@@ -72,6 +83,5 @@ module.exports.remove = async(req, res) => {
 };
 
 
-    
-    
-      
+
+

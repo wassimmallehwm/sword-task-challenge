@@ -8,7 +8,7 @@ const TaskSchema = new mongoose.Schema({
     summary: {
         type: String,
         required: true,
-        maxLength: 10
+        maxLength: 2500
     },
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
