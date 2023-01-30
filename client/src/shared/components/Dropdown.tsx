@@ -9,6 +9,7 @@ type DropdownProps = {
     onAction?: any
     keyField?: string
     displayField?: string
+    small?: boolean
 }
 
 const Dropdown = ({
@@ -16,7 +17,8 @@ const Dropdown = ({
     list,
     onAction,
     keyField,
-    displayField
+    displayField,
+    small
 }: DropdownProps) => {
 
     const {t} = useTranslation()
@@ -41,7 +43,7 @@ const Dropdown = ({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 min-w-[12rem] max-w-md w-max rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <Menu.Items className={`origin-top-right z-10 absolute right-0 mt-2 ${small ? 'min-w-[6rem]' : 'min-w-[12rem]' }  max-w-md w-max rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
                     {
                         list && list.length > 0 ? list.map((item) => (
                             <Menu.Item key={

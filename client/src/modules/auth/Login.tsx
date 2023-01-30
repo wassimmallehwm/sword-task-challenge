@@ -9,6 +9,7 @@ import { Account } from '@modules/users/models/Account';
 import { toastError } from '@utils/toast';
 import { useTranslation } from 'react-i18next';
 import httpErrorHandler from '@utils/error-handler';
+import Language from '@shared/components/Language';
 
 const Login = () => {
     const { t } = useTranslation()
@@ -40,7 +41,7 @@ const Login = () => {
         try {
             const { data } = await authService.authenticate(loginInfo)
             onLogin(data)
-        } catch (error:any) {
+        } catch (error: any) {
             toastError(httpErrorHandler(error).message)
         } finally {
             setLoading(false)
@@ -53,35 +54,36 @@ const Login = () => {
                 <div className="max-w-md w-full mx-auto flex flex-col items-center gap-4 py-2">
                     <img src={logo} className="w-32 text-center" />
                     <div className="text-2xl font-bold text-gray-800 text-center">
-                    {t('app_name')} | Login
+                        {t('app_name')} | Login
                     </div>
                 </div>
                 <form action="" className="space-y-6" onSubmit={onSubmit}>
                     <div>
                         <label className="text-sm font-bold text-gray-600 block">
-                            Email
+                            {t('emailOrUsername')}
                         </label>
                         <input type="text" name="username" onChange={onChange} value={username}
                             className="w-full p-2 border border-gray-300 rounded mt-1" />
                     </div>
                     <div>
                         <label className="text-sm font-bold text-gray-600 block">
-                            Password
+                            {t('password')}
                         </label>
                         <input type="password" name="password" onChange={onChange} value={password}
                             className="w-full p-2 border border-gray-300 rounded mt-1" />
                     </div>
-                    <div className="flex flex-col justify-center">
-                        <div>
+                    <div className="flex flex-col justify-center w-min">
+                        {/* <div>
                             <a href="#" className="font-medium text-sm text-primary-500">
                                 Forgot password ?
                             </a>
-                        </div>
+                        </div> */}
+                        <Language />
                     </div>
                     <div>
                         <button type="submit" disabled={loading} className={`w-full py-2 px-4 bg-primary-500 hover:bg-primary-600 
                         rounded-md text-white text-sm`}>
-                            {loading ? 'Loading...' : 'Login'}
+                            {loading ? `${t('loading')}...` : t('btns.login')}
                         </button>
                     </div>
                 </form>

@@ -34,8 +34,9 @@ function useDataGrid({
     const setRowCount = (data: number) => editRowCount(data)
     const setFilterModel = (model: GridFilterModel) => {
         const data = model.items.filter(elem => elem.value && elem.value.trim() != '')
-        console.log("FILTER MODEL", data)
-        editFilterModel(data)
+        if(model.items.length == 0 || data.length > 0){
+            editFilterModel(data)
+        }
     }
 
     const _filterOperators = (operators: GridFilterOperator<any, any | null, any>[]) => {
@@ -152,7 +153,7 @@ function useDataGrid({
                 onPageChange={(page) => setPage(page)}
                 components={{ Toolbar: GridToolbar }}
                 onFilterModelChange={setFilterModel}
-                onSortModelChange={(model, details) => {setSortModel(model); console.log("SORT MODEL", model)}}
+                onSortModelChange={(model, details) => setSortModel(model)}
                 rowCount={rowCount}
                 componentsProps={componentsProps}
             />

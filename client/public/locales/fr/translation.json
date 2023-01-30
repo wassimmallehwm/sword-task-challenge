@@ -1,6 +1,10 @@
 {
     "app_name": "Gestionnaire des tâches",
     "task": "tâche",
+    "name": "Nom",
+    "email": "Email",
+    "password": "Mot de passe",
+    "emailOrUsername": "Email ou nom d'utilisateur",
     "title": "Titre",
     "summary": "Résumé",
     "isPerformed": "Effecuté",
@@ -21,7 +25,8 @@
         "view": "Afficher",
         "save": "Enregistrer",
         "cancel": "Annuler",
-        "confirm": "Confirmer"
+        "confirm": "Confirmer",
+        "login": "S'authentifier"
     },
     "createRes": "Créer une nouvelle {{res}}",
     "editRes": "Modifier la {{res}}",
@@ -36,5 +41,6 @@
     "text" : {
         "confirmation": "Êtes-vous sûr de vouloir effectuer cette action ?"
     },
-    "noData" : "Pas de données"
+    "noData" : "Pas de données",
+    "loading" : "Chargement"
 }

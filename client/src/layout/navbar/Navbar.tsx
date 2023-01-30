@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { AuthContext, SocketContext } from '@contexts/index'
-import { FaBars, FaSignOutAlt } from 'react-icons/fa'
+import { FaBars, FaCaretDown, FaSignOutAlt } from 'react-icons/fa'
 import { showToast, showNotif } from '@utils/toast'
 import { useTranslation } from 'react-i18next'
 import { Config } from '@config/Config'
@@ -67,11 +67,14 @@ const Navbar = ({
                 </ul>
                 <div className='flex items-center gap-4'>
                     {
-                        isManager(user?.role) ? 
-                        <NotificationsIcon /> : null
+                        isManager(user?.role) ?
+                            <NotificationsIcon /> : null
                     }
                     <Dropdown trigger={(
-                        <span>{user?.displayName}</span>
+                        <div className='flex items-center'>
+                            <span>{user?.displayName}</span>
+                            <FaCaretDown />
+                        </div>
                     )}
                         list={dropdownItems} displayField="label" keyField='id'
                     />

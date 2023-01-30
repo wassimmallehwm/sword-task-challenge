@@ -18,11 +18,8 @@
         "prodLine": "Production line",
         "objectifs": "Our objectifs"
     },
-    "form" : {
-        "subject": "Subject",
-        "email": "Email",
-        "message": "Message",
-        "send" : "Send"
+    "btns" : {
+        "login": "Login"
     },
     "aboutUsText" : "It is an idea, launched by two women, friends, one is a model maker, who has acquired five years' experience in the field of textiles, the other has 5 years' experience in the management of companies. This relationship and this complementarity led to the creation of this project, after careful consideration and several work meetings, in order to study the financing scheme and the profitability study. The company was created on November 1, 2021.",
     "prodLineText" : "Currently the company has 20 people at first. We still plan to recruit around ten people, to reach more than 30 people, in a second phase.",
