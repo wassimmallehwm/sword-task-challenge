@@ -44,21 +44,16 @@ class NotificationsService {
         }
     }
 
-    findAllPaginated = async ({ page, limit, filterModel, sortModel }) => {
+    findAllPaginated = async ({ page, limit }) => {
         try {
-            let filter = DataGridHandler.filterHandler(filterModel)
-            let sort = DataGridHandler.sortHadnler(sortModel)
-            if(Object.entries(sort).length == 0){
-                sort._id = -1
-            }
-            const total = await Notification.find(filter)
+            const total = await Notification.find()
                 .count()
                 .exec();
 
-            let result = await Notification.find(filter)
+            let result = await Notification.find()
                 .skip((page - 1) * limit)
                 .limit(limit)
-                .sort(sort)
+                .sort({_id: -1})
                 .exec();
             if (result) {
                 return new ResponseSuccess({

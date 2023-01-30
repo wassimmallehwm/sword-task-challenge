@@ -73,7 +73,10 @@ const NotificationsIcon = () => {
         socket?.on(NOTIFICATIONS_QUEUE, data => {
             setNotifCount(prev => prev + 1)
             showNotif(<NotificationItem notif={data} popup />)
-            setList(prev => [data, ...prev])
+            setList(prev => {
+                prev.pop()
+                return [data, ...prev]
+            })
             EventsEmitter.emit(NOTIFICATIONS_QUEUE)
         })
 

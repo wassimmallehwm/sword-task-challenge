@@ -9,7 +9,6 @@
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",
     "@hookform/resolvers": "^2.9.10",
-    "@loadable/component": "^5.15.2",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.6.0",

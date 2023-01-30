@@ -36,7 +36,7 @@ module.exports.read = async (req, res) => {
 
 module.exports.getList = async (req, res) => {
   try {
-    const { page = 1, limit = 10, filterModel, sortModel } = req.body;
+    const { page = 1, limit = 10 } = req.query;
     const {
       success,
       status,
@@ -44,9 +44,7 @@ module.exports.getList = async (req, res) => {
       message
     } = await NotificationsService.findAllPaginated({
       page: parseInt(page, 10),
-      limit: parseInt(limit, 10),
-      filterModel,
-      sortModel
+      limit: parseInt(limit, 10)
     });
     res.status(status).json(success ? content : { message });
   } catch (err) {

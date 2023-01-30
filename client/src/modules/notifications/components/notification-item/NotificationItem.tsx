@@ -20,7 +20,7 @@ const NotificationItem = ({
             className={
                 `shadow-lg rounded cursor-pointer pointer-events-auto flex w-auto
                 ${page ? 'w-[80vw] m-auto' : 'max-w-md'}
-                ${!notif?.read && !popup ? 'bg-gray-200' : 'bg-white'}`
+                ${!notif?.read && !popup ? 'bg-primary-50' : 'bg-white'}`
             }
         >
             <div className="w-full p-4">

@@ -182,7 +182,7 @@ class TaskService {
     }
 
     nullOrEmpty = (data) => {
-        return !data || data.trim() == ""
+        return !data || data.toString().trim() == ""
     }
 
     sendNotificationToManager = (task) => {

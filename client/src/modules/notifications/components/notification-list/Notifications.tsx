@@ -1,5 +1,6 @@
 import { NOTIFICATIONS_COUNT_DESCREASE } from '@config/const'
 import { Notification } from '@modules/notifications/models/notification'
+import { Pagination } from '@mui/material'
 import { PageTitle } from '@shared/components'
 import EventsEmitter from '@utils/events'
 import { useEffect, useState } from 'react'
@@ -8,16 +9,19 @@ import NotificationsService from '../../services/notification.service'
 import NotificationItem from '../notification-item/NotificationItem'
 
 const Notifications = () => {
-    const {t} = useTranslation()
+    const { t } = useTranslation()
     const [list, setList] = useState<Notification[]>([])
+    const [page, setPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(0)
 
     const getNotifs = async () => {
-        const { response, error, success } = await NotificationsService.list()
+        const { response, error, success } = await NotificationsService.list({
+            page
+        })
         if (success && response) {
             console.log(response)
-            setList(response.docs.map(elem => {
-                return { ...elem, active: !elem.read }
-            }))
+            setList(response.docs)
+            setTotalPages(response.pages)
         } else {
             console.error(error?.message)
         }
@@ -25,7 +29,7 @@ const Notifications = () => {
 
     useEffect(() => {
         getNotifs()
-    }, [])
+    }, [page])
 
     const viewNotif = async (notif: Notification) => {
         if (!notif.read) {
@@ -38,7 +42,7 @@ const Notifications = () => {
                 }
                 return elem
             }))
-            EventsEmitter.emit(NOTIFICATIONS_COUNT_DESCREASE, {id: notif._id})
+            EventsEmitter.emit(NOTIFICATIONS_COUNT_DESCREASE, { id: notif._id })
             await NotificationsService.read(notif._id!)
         }
     }
@@ -53,6 +57,17 @@ const Notifications = () => {
                     </div>)
                 }
             </div>
+
+            {
+                totalPages > 1 ? (
+                    <div className='flex items-center justify-end mt-8 mb-16 px-2'>
+                        <Pagination variant="outlined" shape="rounded"
+                            siblingCount={0} boundaryCount={1}
+                            count={totalPages} page={page} defaultPage={page}
+                            onChange={(e, page) => setPage(page)} />
+                    </div>
+                ) : null
+            }
         </div>
     )
 }

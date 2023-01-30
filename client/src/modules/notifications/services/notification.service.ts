@@ -21,13 +21,17 @@ class NotificationsService extends BaseService {
     private httpUrl = (apiUrl: string) => {
         return `${this.SRC_URL}${apiUrl}`
     }
-    
-    findTop(){
+
+    list(query?: any){
         return this.httpClient<Page<Notification>>({
             apiUrl: this.httpUrl('list'),
-            method: "POST",
-            body: {limit: 4}
+            method: "GET",
+            query: query
         });
+    }
+    
+    findTop(){
+        return this.list({limit: 4})
     }
     
     count(){
@@ -41,14 +45,6 @@ class NotificationsService extends BaseService {
         return this.httpClient<number>({
             apiUrl: this.httpUrl(`read/${id}`),
             method: "GET"
-        });
-    }
-
-    list(query?: any){
-        return this.httpClient<Page<Notification>>({
-            apiUrl: this.httpUrl('list'),
-            method: "POST",
-            body: query
         });
     }
 

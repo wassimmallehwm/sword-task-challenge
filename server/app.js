@@ -5,7 +5,7 @@ const { Server } = require("socket.io");
 require('dotenv').config();
 
 const dbConnect = require('./database');
-const {expressMiddelwares} = require('./middleware');
+const { expressMiddelwares } = require('./middleware');
 const ioConfig = require('./socket');
 
 const server = http.createServer(app);
