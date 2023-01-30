@@ -1,7 +1,9 @@
 
 export type Notification = {
     _id? : string
-    title? : string
+    user? : string
+    task? : string
+    date? : Date
     read? : boolean
     active?: boolean
     createdAt? : Date

@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { FaBell } from 'react-icons/fa'
 import { SocketContext } from 'src/contexts/socket/SocketContext'
-import { showNotif } from 'src/utils'
+import { EventsEmitter, showNotif } from 'src/utils'
 import { NotificationItem } from 'src/modules/notifications'
 import { Dropdown } from '@shared/components'
 import { useModal } from '@hooks/index'
 import { useTranslation } from 'react-i18next'
 import { Notification } from '@modules/notifications/models/notification'
-import { elementAcceptingRef } from '@mui/utils'
 import NotificationsService from '@modules/notifications/services/notification.service'
+import { NOTIFICATIONS_COUNT_DESCREASE, NOTIFICATIONS_QUEUE } from '@config/const'
+import { Link } from 'react-router-dom'
 
 const NotificationsIcon = () => {
     const { socket } = useContext(SocketContext)
@@ -20,9 +21,8 @@ const NotificationsIcon = () => {
     const getTopNotifs = async () => {
         const { response, error, success } = await NotificationsService.findTop()
         if (success && response) {
-            setList(response.docs.map(elem => {
-                return { ...elem, active: !elem.read }
-            }))
+            console.log(response)
+            setList(response.docs)
         } else {
             console.error(error?.message)
         }
@@ -30,33 +30,35 @@ const NotificationsIcon = () => {
 
     const countNotifs = async () => {
         const { response, error, success } = await NotificationsService.count()
-        if (success && response) {
+        if (success && response !== null) {
             setNotifCount(response)
         } else {
             console.error(error?.message)
         }
     }
 
-    const viewNotif = async (notif: Notification) => {
-        setCurrentNotif(notif)
-        viewModal.openModal()
-        if (!notif.read) {
-            const { error, success } = await NotificationsService.read(notif._id!)
-            if (success) {
-                setList(prev => prev.map(elem => {
-                    if (elem._id == notif._id) {
-                        return {
-                            ...elem,
-                            read: true,
-                            active: false
-                        }
-                    }
-                    return elem
-                }))
-                setNotifCount(prev => prev - 1)
-            } else {
-                console.error(error?.message)
+    const readNotif = (id: string) => {
+        setList(prev => prev.map(elem => {
+            if (elem._id ==id) {
+                return {
+                    ...elem,
+                    read: true
+                }
             }
+            return elem
+        }))
+        setNotifCount(prev => prev - 1)
+    }
+
+    const viewNotif = async (notif: Notification) => {
+        if (!notif.read) {
+            setCurrentNotif({...notif, read: true})
+            readNotif(notif._id!)
+            viewModal.openModal()
+            await NotificationsService.read(notif._id!)
+        } else {
+            setCurrentNotif(notif)
+            viewModal.openModal()
         }
     }
 
@@ -68,15 +70,18 @@ const NotificationsIcon = () => {
     }, [])
 
     useEffect(() => {
-        socket?.on('Notifications', data => {
-            console.log(data)
+        socket?.on(NOTIFICATIONS_QUEUE, data => {
             setNotifCount(prev => prev + 1)
-            showNotif(<NotificationItem notif={data} />)
+            showNotif(<NotificationItem notif={data} popup />)
             setList(prev => [data, ...prev])
+            EventsEmitter.emit(NOTIFICATIONS_QUEUE)
         })
 
+        EventsEmitter.on(NOTIFICATIONS_COUNT_DESCREASE, (id: string) => readNotif(id))
+
         return () => {
-            socket?.off('Notifications')
+            socket?.off(NOTIFICATIONS_QUEUE)
+            EventsEmitter.off(NOTIFICATIONS_COUNT_DESCREASE)
         }
     }, [socket])
 
@@ -100,11 +105,21 @@ const NotificationsIcon = () => {
         </>
     )
 
+    const displayComponent = (notif: any) => (
+        <NotificationItem notif={notif}/>
+    )
+
+    const footer = (
+        <Link to="/notifications" 
+        className="block w-full py-3 px-4 text-center text-primary-500 hover:underline">
+            {t('seeAll')}
+            </Link>
+    )
     return (
         <>
             <Dropdown trigger={trigger} list={list}
-                displayField='title' keyField='_id'
-                onAction={viewNotif} />
+                keyField='_id' onAction={viewNotif} 
+                displayComponent={displayComponent} footer={footer} />
             {viewModal.modal}
         </>
     )

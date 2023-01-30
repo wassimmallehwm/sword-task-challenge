@@ -38,6 +38,10 @@ const Navbar = ({
             onAction: onLogout
         }
     ]
+
+    const displayComponent = (item: any) => (
+        <span className="block w-full py-3 px-4"> {item.label} </span>
+    )
     return (
         <header className="bg-slate-50 shadow-md h-16 flex items-center justify-center w-full border-b-2 border-b-gray-200">
             <div className="flex flex-grow items-center justify-between px-4 h-full">
@@ -76,7 +80,7 @@ const Navbar = ({
                             <FaCaretDown />
                         </div>
                     )}
-                        list={dropdownItems} displayField="label" keyField='id'
+                        list={dropdownItems} displayComponent={displayComponent} keyField='id'
                     />
                 </div>
 

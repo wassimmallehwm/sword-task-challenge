@@ -39,7 +39,7 @@ const Users = () => {
 
     return (
         <div className="main-div">
-            <PageTitle color="primary">{t('titles.technicians')}</PageTitle>
+            <PageTitle>{t('titles.technicians')}</PageTitle>
             {dataGrid.grid}
         </div>
     )

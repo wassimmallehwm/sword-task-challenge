@@ -118,7 +118,7 @@ export class BaseService {
             const {data} = await Axios.request<T>(options);
             const request_end_at = performance.now();
             const request_duration = request_end_at - request_start_at;
-            console.log("Request perf : ", request_duration)
+            console.log("Request perf : ", apiUrl, request_duration)
             return {
                 success: true,
                 response: data,

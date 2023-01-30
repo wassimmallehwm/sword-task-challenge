@@ -15,6 +15,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { formatDateTimeToInput } from '@utils/dateFormat'
 import TasksView from '../tasks-view/TasksView'
 import validationSchema from '@modules/tasks/validation/schema'
+import EventsEmitter from '@utils/events'
+import { NOTIFICATIONS_QUEUE } from '@config/const'
 
 const Tasks = () => {
     const { user } = useContext(AuthContext)
@@ -153,10 +155,18 @@ const Tasks = () => {
         }
     }, [register, unregister, watchIsPerformed]);
 
+    useEffect(() => {
+        EventsEmitter.on(NOTIFICATIONS_QUEUE, () => getTasks())
+
+        return () => {
+            EventsEmitter.off(NOTIFICATIONS_QUEUE, () => getTasks())
+        }
+    }, [])
+
     return (
         <div className="main-div">
             <div className='flex items-center justify-between'>
-                <PageTitle color="primary">{t('titles.tasks')}</PageTitle>
+                <PageTitle>{t('titles.tasks')}</PageTitle>
                 {
                     !isManager(user?.role) ? (
                         <Button color='primary' title='create' rounded outline

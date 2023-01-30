@@ -12,6 +12,7 @@
     "technician": "Technicien",
     "actions": "Actions",
     "notification" : "Notification",
+    "notifications" : "Notifications",
     "titles" : {
         "technicians": "Techniciens",
         "tasks": "Tâches",
@@ -39,8 +40,10 @@
         "maxLength": "{{field}} ne devra pas dépasser {{max}} caractères"
     },
     "text" : {
-        "confirmation": "Êtes-vous sûr de vouloir effectuer cette action ?"
+        "confirmation": "Êtes-vous sûr de vouloir effectuer cette action ?",
+        "notification": "L'utilisateur <strong>{{user}}</strong> a effectué la tâche <strong>{{task}}</strong>, le <strong>{{date}}</strong>"
     },
     "noData" : "Pas de données",
-    "loading" : "Chargement"
+    "loading" : "Chargement",
+    "seeAll" : "Voir tout"
 }

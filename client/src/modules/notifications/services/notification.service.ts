@@ -26,7 +26,7 @@ class NotificationsService extends BaseService {
         return this.httpClient<Page<Notification>>({
             apiUrl: this.httpUrl('list'),
             method: "POST",
-            body: {limit: 5}
+            body: {limit: 4}
         });
     }
     

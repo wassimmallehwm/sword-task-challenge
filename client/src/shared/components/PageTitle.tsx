@@ -6,7 +6,7 @@ interface PageTitleProps {
 }
 
 const PageTitle = ({
-    color = 'blue',
+    color = 'primary',
     children
 }: PageTitleProps) => {
     return (

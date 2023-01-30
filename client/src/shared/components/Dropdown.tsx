@@ -9,6 +9,8 @@ type DropdownProps = {
     onAction?: any
     keyField?: string
     displayField?: string
+    displayComponent?: any
+    footer?: ReactNode
     small?: boolean
 }
 
@@ -17,7 +19,8 @@ const Dropdown = ({
     list,
     onAction,
     keyField,
-    displayField,
+    displayComponent,
+    footer,
     small
 }: DropdownProps) => {
 
@@ -43,7 +46,7 @@ const Dropdown = ({
                 leaveFrom="transform opacity-100 scale-100"
                 leaveTo="transform opacity-0 scale-95"
             >
-                <Menu.Items className={`origin-top-right z-10 absolute right-0 mt-2 ${small ? 'min-w-[6rem]' : 'min-w-[12rem]' }  max-w-md w-max rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
+                <Menu.Items className={`origin-top-right z-10 absolute right-0 mt-2 ${small ? 'min-w-[6rem]' : 'min-w-[12rem]' }  max-w-md w-max rounded shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none`}>
                     {
                         list && list.length > 0 ? list.map((item) => (
                             <Menu.Item key={
@@ -59,13 +62,9 @@ const Dropdown = ({
                                                 () => onAction(item)}
                                         className={classNames(
                                             item.active || active ? 'bg-gray-200' : '',
-                                            'block px-4 py-2 text-sm text-gray-700 cursor-pointer border-b border-b-gray-300 last:border-none'
+                                            'block text-sm text-gray-700 cursor-pointer border-b border-b-gray-300 last:border-none'
                                         )}>
-                                        {
-                                            displayField && item[displayField] ?
-                                                item[displayField] :
-                                                item
-                                        }
+                                        {displayComponent(item)}
                                     </div>
 
                                 }
@@ -75,6 +74,13 @@ const Dropdown = ({
                                 {t('noData')}
                             </div>
                         )
+                    }
+                    {
+                        footer ? (
+                            <Menu.Item key="footer">
+                                {footer}
+                            </Menu.Item>
+                        ) : null
                     }
                 </Menu.Items>
             </Transition>

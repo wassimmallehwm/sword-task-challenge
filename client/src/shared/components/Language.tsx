@@ -46,9 +46,13 @@ const Language = () => {
         </>
     )
 
+    const displayComponent = (item: any) => (
+        <span className="block w-full py-3 px-4"> {item.label} </span>
+    )
+
     return (
         <Dropdown trigger={trigger} list={langs} small
-        keyField="id" displayField='label' />
+        keyField="id" displayComponent={displayComponent} />
     )
 }
 

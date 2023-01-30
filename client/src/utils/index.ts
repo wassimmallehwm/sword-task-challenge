@@ -1,3 +1,4 @@
+import EventsEmitter from "./events";
 import { isManager } from "./roles";
 import { dismissAllToasts, showToast, showLoading, showNotif } from "./toast";
 
@@ -6,5 +7,6 @@ export {
     showNotif,
     showLoading,
     dismissAllToasts,
-    isManager
+    isManager,
+    EventsEmitter
 }

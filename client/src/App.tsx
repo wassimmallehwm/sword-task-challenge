@@ -59,6 +59,7 @@ function App() {
                   )
                 }
               })}
+              <Route path="*" element={<Navigate to="/tasks" />} />
             </Routes>
         </Layout>
       </AppContext>
