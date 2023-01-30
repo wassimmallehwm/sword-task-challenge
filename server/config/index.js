@@ -23,4 +23,7 @@ module.exports = {
 
     //RabbitMq config
     CLOUDAMQP_URL: process.env.CLOUDAMQP_URL || 'amqp://localhost:5672',
+
+    //Redis config
+    REDIS_CACHE_DURATION: 60 * 60 * 60 * 24
 }

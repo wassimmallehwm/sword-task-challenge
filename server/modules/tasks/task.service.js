@@ -5,6 +5,7 @@ const MessageBroker = require('../../config/MessageBroker')
 const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
 const { NOTIFICATION_QUEUE } = require("../../constants");
 const UserDto = require("../users/user.dto");
+const RedisCaching = require("../../config/RedisCaching");
 const SERVICE_NAME = "TaskService"
 
 class TaskService {
@@ -68,7 +69,8 @@ class TaskService {
 
     findAllPaginated = async (
         { page, limit, filterModel, sortModel },
-        user
+        user,
+        req
     ) => {
         try {
             let filter = DataGridHandler.filterHandler(filterModel)
@@ -92,15 +94,17 @@ class TaskService {
                 return { ...elem.toJSON(), createdBy: new UserDto(elem.createdBy) }
             })
             if (result) {
+                const content = {
+                    page,
+                    limit,
+                    total,
+                    pages: Math.ceil(total / limit),
+                    docs: result
+                }
+                RedisCaching.cacheData(req, content)
                 return new ResponseSuccess({
                     status: 200,
-                    content: {
-                        page,
-                        limit,
-                        total,
-                        pages: Math.ceil(total / limit),
-                        docs: result
-                    }
+                    content
                 })
             }
         } catch (err) {

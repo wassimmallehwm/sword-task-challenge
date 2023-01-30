@@ -33,8 +33,8 @@ class AuthService {
                 })
             const filter = {
                 $or: [
-                    { firstname: username},
-                    { lastname: username}
+                    { username: username},
+                    { email: username}
                 ]
             }
 

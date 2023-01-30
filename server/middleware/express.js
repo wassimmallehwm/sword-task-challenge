@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const path = require('path');
 const fs = require('fs');
 const { ACCESS_TOKEN, REFRESH_TOKEN } = require('../constants');
+const RedisCaching = require('../config/RedisCaching');
 
 const expressMiddelwares = (app, dir) => {
   app.use('/public', express.static(path.join(dir, 'public')));
@@ -34,7 +35,7 @@ const expressMiddelwares = (app, dir) => {
       app.use(`/api/${mod}`, require(`../modules/${mod}`).routes)
     });
   });
-
+  RedisCaching.connect()
 }
 
 module.exports = expressMiddelwares;
