@@ -1,18 +1,8 @@
 import moment from "moment"
 
-export const formateDate = (date: any) => {
-    return date && date.toString().trim() !== "" ?
-        moment(date).format("DD/MM/YYYY") : ""
-}
-
-export const formateDateTime = (date: any) => {
+export const formatDateTime = (date: any) => {
     return date && date.toString().trim() !== "" ?
         moment(date).format("DD/MM/YYYY HH:mm") : ""
-}
-
-export const fromNow = (date: any) => {
-    return date && date.toString().trim() !== "" ?
-        moment(date).fromNow() : ""
 }
 
 export const formatDateTimeToInput = (date: any) => {

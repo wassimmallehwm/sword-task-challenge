@@ -3,9 +3,6 @@ module.exports = {
   darkMode: false, // or 'media' or 'class',
   theme: {
     extend: {
-      backgroundImage: theme => ({
-        'homePage': "url('http://localhost:4000/api/settings/cover')"
-      }),
       colors: {
         'primary': {
           50: '#e6ecee',
@@ -24,34 +21,25 @@ module.exports = {
           400: '#981c49',
           500: '#8C0335',
           600: '#7e0330'
-        },
-        'success': {
-          50: '#eafaee',
-          100: '#c1f0cc',
-          200: '#98e6aa',
-          300: '#46d366',
-          400: '#28a745',
-          500: '#22903c',
-          600: '#19672b'
-        }  
+        } 
       }
     },
   },
   safelist: [
     {
-      pattern: /bg-(primary|success|secondary|slate)-(50|100|200|300|400|500|600)/,
+      pattern: /bg-(primary|secondary|slate)-(50|100|200|300|400|500|600)/,
       variants: ['sm', 'md', 'lg', 'hover', 'focus', 'lg:hover'],
     },
     {
-      pattern: /text-(primary|success|secondary|slate)-(50|100|200|300|400|500|600)/,
+      pattern: /text-(primary|secondary|slate)-(50|100|200|300|400|500|600)/,
       variants: ['sm', 'md', 'lg', 'hover', 'focus', 'lg:hover'],
     },
     {
-      pattern: /border-(primary|success|secondary|slate)-(50|100|200|300|400|500|600)/,
+      pattern: /border-(primary|secondary|slate)-(50|100|200|300|400|500|600)/,
       variants: ['sm', 'md', 'lg', 'hover', 'focus', 'lg:hover'],
     },
     {
-      pattern: /ring-(primary|success|secondary|slate)-(50|100|200|300|400|500|600)/,
+      pattern: /ring-(primary|secondary|slate)-(50|100|200|300|400|500|600)/,
       variants: ['sm', 'md', 'lg', 'hover', 'focus', 'lg:hover'],
     },
     {

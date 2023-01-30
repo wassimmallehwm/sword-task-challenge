@@ -1,4 +1,4 @@
-import { formateDateTime } from '@utils/dateFormat'
+import { formatDateTime } from '@utils/dateFormat'
 import React from 'react'
 
 type NotificationItemProps = {
@@ -24,7 +24,7 @@ const NotificationItem = ({
                             {notif?.title}
                         </p>
                         <p className="flex justify-end mt-1 text-xs font-thin text-gray-500 truncate">
-                            {formateDateTime(notif?.createdAt)}
+                            {formatDateTime(notif?.createdAt)}
                         </p>
                     </div>
             </div>

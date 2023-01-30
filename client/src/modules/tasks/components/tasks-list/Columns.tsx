@@ -3,7 +3,7 @@ import { isManager } from "@utils/roles"
 import { Button } from "@shared/components";
 import { Account } from "@modules/users/models/Account";
 import { FaCheck, FaEdit, FaEye, FaTimes, FaTrash } from "react-icons/fa";
-import { formateDateTime } from "@utils/dateFormat";
+import { formatDateTime } from "@utils/dateFormat";
 import { useTranslation } from "react-i18next";
 
 type ColumnsProps = {
@@ -40,7 +40,7 @@ const Columns = ({
         },
         {
             field: 'performedAt', headerName: t('performedAt'), minWidth: 100, flex: true, type: 'dateTime',
-            renderCell: (cellValues: GridValueGetterParams) => formateDateTime(cellValues.row.performedAt)
+            renderCell: (cellValues: GridValueGetterParams) => formatDateTime(cellValues.row.performedAt)
         },
         {
             field: "action", headerName: t('actions'), Width: 100, type: 'actions',

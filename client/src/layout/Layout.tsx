@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import Navbar from './navbar/Navbar'
 import Sidebar from './sidebar/Sidebar'
 import { AuthContext, SocketContext } from '@contexts/index'
@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 
 const Layout = ({ children }: any) => {
     const { user } = useContext(AuthContext)
-    const { socket, connect, disconnect } = useContext(SocketContext)
+    const { connect, disconnect } = useContext(SocketContext)
     const [isSidebarOpen, openSidebar] = useState<boolean>(false)
     const {t} = useTranslation()
     document.title = t('app_name')
