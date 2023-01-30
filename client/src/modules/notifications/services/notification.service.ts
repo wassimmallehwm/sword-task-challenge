@@ -24,7 +24,7 @@ class NotificationsService extends BaseService {
 
     list(query?: any){
         return this.httpClient<Page<Notification>>({
-            apiUrl: this.httpUrl('list'),
+            apiUrl: this.httpUrl(''),
             method: "GET",
             query: query
         });

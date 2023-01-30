@@ -52,7 +52,8 @@ const Columns = ({
                             <FaEye />
                         </Button>
                         {
-                            user.id === cellValues.row.createdBy.id ? (
+                            user.id === cellValues.row.createdBy.id &&
+                            !cellValues.row.isPerformed ? (
                                 <Button color='primary' title='edit' rounded outline
                                     onClick={() => handleEdit(cellValues.row.id)}>
                                     <FaEdit />
