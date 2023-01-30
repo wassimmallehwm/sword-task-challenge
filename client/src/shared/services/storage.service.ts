@@ -1,5 +1,4 @@
 import { Account } from "@modules/users/models/Account";
-import { Settings } from "@shared/types";
 
 class StorageService {
     private _USER_DATA = "userData";

@@ -23,23 +23,11 @@ class UsersService extends BaseService {
     }
 
     list(query?: any){
-        return this.httpClient<Page<Account>>(this.httpUrl('list'), "POST", query);
-    }
-
-    findOne(id: string){
-        return this.httpClient<Account>(this.httpUrl(id), 'GET');
-    }
-
-    create(data: Account){
-        return this.httpClient(this.httpUrl(""), 'POST', data);
-    }
-
-    update(id: string, data: Account){
-        return this.httpClient(this.httpUrl(id), 'PUT', data);
-    }
-
-    delete(id: string){
-        return this.httpClient(this.httpUrl(id), 'DELETE');
+        return this.httpClient<Page<Account>>({
+            apiUrl: this.httpUrl('list'),
+            method: "POST",
+            body: query
+        });
     }
 
 }

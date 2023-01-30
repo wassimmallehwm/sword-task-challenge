@@ -3,7 +3,6 @@ import { useConfirmation, useDataGrid, useModal } from '@hooks/index'
 import { InitTask, Task } from '@modules/tasks/models/task'
 import TasksService from '@modules/tasks/services/tasks.service'
 import { Button, PageTitle } from '@shared/components'
-import httpErrorHandler from '@utils/error-handler'
 import { showLoading, toastError, toastSuccess } from '@utils/toast'
 import { useContext, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,7 +12,6 @@ import TasksForm from '../tasks-form/TasksForm'
 import { isManager } from '@utils/roles'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
 import { formatDateTimeToInput } from '@utils/dateFormat'
 import TasksView from '../tasks-view/TasksView'
 import validationSchema from '@modules/tasks/validation/schema'
@@ -24,7 +22,7 @@ const Tasks = () => {
 
     const [tasks, setTasks] = useState<Task[]>([]);
     const [task, setTask] = useState<Task>(InitTask);
-    const [deleteTask, setDeleteTask] = useState<string|null>(null);
+    const [deleteTask, setDeleteTask] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -43,26 +41,25 @@ const Tasks = () => {
 
     const getTasks = async () => {
         setLoading(true)
-        try {
-            const { data } = await TasksService.list(dataGrid.params);
-            setTasks(data.docs)
-            dataGrid.setRowCount(data.total)
-        } catch (error: any) {
-            toastError(httpErrorHandler(error).message)
-        } finally {
-            setLoading(false)
+        const { response, error, success } = await TasksService.list(dataGrid.params);
+        if (success && response) {
+            setTasks(response.docs)
+            dataGrid.setRowCount(response.total)
+        } else {
+            toastError(error?.message)
         }
+        setLoading(false)
     }
 
     const save = async (val: Task) => {
         showLoading()
-        try {
-            await TasksService.save(task._id, val)
+        const { error, success } = await TasksService.save(task._id, val)
+        if (success) {
             toastSuccess(t('succes.save', { res: t('task') }))
             getTasks()
             formModal.closeModal()
-        } catch (error: any) {
-            toastError(httpErrorHandler(error).message)
+        } else {
+            toastError(error?.message)
         }
     }
 
@@ -89,13 +86,13 @@ const Tasks = () => {
 
     const onDelete = async () => {
         showLoading()
-        try {
-            await TasksService.delete(deleteTask!)
+        const { error, success } = await await TasksService.delete(deleteTask!)
+        if (success) {
             toastSuccess(t('success.delete', { res: t('task') }))
             getTasks()
             onCancelDelete()
-        } catch (error: any) {
-            toastError(httpErrorHandler(error).message)
+        } else {
+            toastError(error?.message)
         }
     }
 
@@ -131,7 +128,7 @@ const Tasks = () => {
 
     const viewModal = useModal({
         title: task?.title!,
-        content: <TasksView task={task}/>,
+        content: <TasksView task={task} />,
         onCancel: () => setTask(InitTask)
     })
 

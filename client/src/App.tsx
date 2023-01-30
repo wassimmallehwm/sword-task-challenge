@@ -5,7 +5,6 @@ import Layout from '@layout/Layout';
 
 import { AppContext, AuthContext } from './contexts';
 import appRoutes from './routes';
-import { ErrorFallback, Spinner } from '@shared/components';
 import { GuestRoute, ProtectedRoute } from '@shared/guards';
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
@@ -15,6 +14,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Toaster } from 'react-hot-toast';
 import { withTranslation } from 'react-i18next';
 import "./i18n/i18n";
+import { Spinner } from '@shared/components';
 
 
 function App() {
@@ -26,7 +26,6 @@ function App() {
       <Toaster />
       <AppContext>
         <Layout>
-          <ErrorFallback>
             <Routes>
               <Route path="/" element={<Navigate to="/tasks" />} />
               {appRoutes.map((route, i) => {
@@ -61,7 +60,6 @@ function App() {
                 }
               })}
             </Routes>
-          </ErrorFallback>
         </Layout>
       </AppContext>
     </BrowserRouter>

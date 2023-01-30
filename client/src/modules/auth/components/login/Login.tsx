@@ -1,14 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@contexts/auth/AuthContext';
-import authService from './auth.service';
-import logo from '../../assets/logo.png';
-import { APP_NAME } from '@config/const';
+import authService from '../../services/auth.service';
+import logo from '@assets/logo.png';
 import { SocketContext } from '@contexts/index';
 import { Account } from '@modules/users/models/Account';
 import { toastError } from '@utils/toast';
 import { useTranslation } from 'react-i18next';
-import httpErrorHandler from '@utils/error-handler';
 import Language from '@shared/components/Language';
 
 const Login = () => {
@@ -38,14 +36,13 @@ const Login = () => {
     const onSubmit = async (e: any) => {
         e.preventDefault();
         setLoading(true)
-        try {
-            const { data } = await authService.authenticate(loginInfo)
-            onLogin(data)
-        } catch (error: any) {
-            toastError(httpErrorHandler(error).message)
-        } finally {
-            setLoading(false)
+        const { response, error, success } = await authService.authenticate(loginInfo)
+        if (success && response) {
+            onLogin(response)
+        } else {
+            toastError(error?.message)
         }
+        setLoading(false)
     }
 
     return (
@@ -73,11 +70,6 @@ const Login = () => {
                             className="w-full p-2 border border-gray-300 rounded mt-1" />
                     </div>
                     <div className="flex flex-col justify-center w-min">
-                        {/* <div>
-                            <a href="#" className="font-medium text-sm text-primary-500">
-                                Forgot password ?
-                            </a>
-                        </div> */}
                         <Language />
                     </div>
                     <div>

@@ -23,11 +23,11 @@ class TasksService extends BaseService {
     }
 
     list(query?: any){
-        return this.httpClient<Page<Task>>(this.httpUrl('list'), "POST", query);
-    }
-
-    findOne(id: string){
-        return this.httpClient<Task>(this.httpUrl(id), 'GET');
+        return this.httpClient<Page<Task>>({
+            apiUrl: this.httpUrl('list'),
+            method: "POST",
+            body: query
+        });
     }
 
     save(id: string|undefined, data: Task){
@@ -38,15 +38,26 @@ class TasksService extends BaseService {
     }
 
     create(data: Task){
-        return this.httpClient(this.httpUrl(""), 'POST', data);
+        return this.httpClient<Page<Task>>({
+            apiUrl: this.httpUrl(''),
+            method: "POST",
+            body: data
+        });
     }
 
     update(id: string, data: Task){
-        return this.httpClient(this.httpUrl(id), 'PUT', data);
+        return this.httpClient<Page<Task>>({
+            apiUrl: this.httpUrl(id),
+            method: "PUT",
+            body: data
+        });
     }
 
     delete(id: string){
-        return this.httpClient(this.httpUrl(id), 'DELETE');
+        return this.httpClient<Page<Task>>({
+            apiUrl: this.httpUrl(id),
+            method: "DELETE"
+        });
     }
 
 }

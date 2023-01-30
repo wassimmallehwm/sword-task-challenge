@@ -1,7 +1,6 @@
 import Button from "./Button";
 import Confirmation from "./Confirmation";
 import DynamicIcon from "./DynamicIcon";
-import ErrorFallback from "./ErrorFallback";
 import Loader from "./Loader";
 import Modal from "./Modal";
 import NoData from "./NoData";
@@ -15,7 +14,6 @@ export {
   Loader,
   Button,
   Confirmation,
-  ErrorFallback,
   Modal,
   Spinner,
   PageTitle,

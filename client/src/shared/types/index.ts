@@ -1,8 +1,11 @@
-import { AuthResponse } from "./auth-response";
-import { ErrorData } from "./error-data";
+import { HttpRequest } from "./http-request";
+import { HttpResponse } from "./http-response";
 import { Page } from "./page";
 import { Route } from "./route";
-import { Settings } from "./settings";
 
-export { ErrorData };
-export type { Route, Settings, AuthResponse, Page };
+export type {
+    Route,
+    Page,
+    HttpRequest,
+    HttpResponse
+};

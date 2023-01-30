@@ -6,7 +6,7 @@ import { showToast, showNotif } from '@utils/toast'
 import { useTranslation } from 'react-i18next'
 import { Config } from '@config/Config'
 import { Dropdown } from '@shared/components'
-import logo from '../../assets/logo.png'
+import logo from '@assets/logo.png'
 import { NotificationsIcon } from '@modules/notifications'
 import { isManager } from '@utils/roles'
 

@@ -1,6 +1,5 @@
 import { Account } from '@modules/users/models/Account';
 import { BaseService } from '@shared/services/base.service';
-import { AuthResponse } from '@shared/types';
 
 class AuthService extends BaseService {
     private SRC_URL = "auth/";
@@ -23,11 +22,11 @@ class AuthService extends BaseService {
     }
 
     authenticate(data?: any){
-        return this.httpClient<Account>(this.httpUrl('login'), "POST", data);
-    }
-
-    signup(data?: any){
-        return this.httpClient(this.httpUrl('signup'), 'POST', data);
+        return this.httpClient<Account>({
+            apiUrl: this.httpUrl('login'),
+            method: "POST",
+            body: data
+        });
     }
 
 }

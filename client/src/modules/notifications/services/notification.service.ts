@@ -2,11 +2,20 @@ import { Page } from '@shared/types';
 import { BaseService } from '../../../shared/services/base.service';
 import { Notification } from '../models/notification';
 
-export class NotificationsService extends BaseService {
+class NotificationsService extends BaseService {
     SRC_URL = "notifications/";
+
+    private static instance: NotificationsService;
 
     constructor() {
         super();
+    }
+
+    static getInstance() {
+        if (this.instance == null) {
+            this.instance = new NotificationsService()
+        }
+        return this.instance
     }
 
     private httpUrl = (apiUrl: string) => {
@@ -14,20 +23,36 @@ export class NotificationsService extends BaseService {
     }
     
     findTop(){
-        return this.httpClient<Page<Notification>>(this.httpUrl('list'), "GET", {limit: 5});
+        return this.httpClient<Page<Notification>>({
+            apiUrl: this.httpUrl('list'),
+            method: "POST",
+            body: {limit: 5}
+        });
     }
     
     count(){
-        return this.httpClient<number>(this.httpUrl('count'), "GET");
+        return this.httpClient<number>({
+            apiUrl: this.httpUrl('count'),
+            method: "GET"
+        });
     }
     
     read(id: string){
-        return this.httpClient(this.httpUrl(`read/${id}`), "GET");
+        return this.httpClient<number>({
+            apiUrl: this.httpUrl(`read/${id}`),
+            method: "GET"
+        });
     }
 
     list(query?: any){
-        return this.httpClient<Page<Notification>>(this.httpUrl('list'), "GET", query);
+        return this.httpClient<Page<Notification>>({
+            apiUrl: this.httpUrl('list'),
+            method: "POST",
+            body: query
+        });
     }
 
 }
+
+export default NotificationsService.getInstance();
 

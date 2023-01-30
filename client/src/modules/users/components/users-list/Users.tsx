@@ -6,7 +6,6 @@ import usersService from '@modules/users/services/users.service';
 import { useTranslation } from 'react-i18next';
 import { useDataGrid } from '@hooks/index';
 import { columns } from './columns';
-import httpErrorHandler from '@utils/error-handler';
 import { Account } from '@modules/users/models/Account';
 
 const Users = () => {
@@ -18,15 +17,14 @@ const Users = () => {
 
     const getUsers = async () => {
         setLoading(true)
-        try {
-            const { data } = await usersService.list(dataGrid.params);
-            setAccounts(data.docs)
-            dataGrid.setRowCount(data.total)
-        } catch (error: any) {
-            toastError(httpErrorHandler(error).message)
-        } finally{
-            setLoading(false)
+        const { response, error, success } = await usersService.list(dataGrid.params);
+        if (success && response) {
+            setAccounts(response.docs)
+            dataGrid.setRowCount(response.total)
+        } else {
+            toastError(error?.message)
         }
+        setLoading(false)
     }
 
     const dataGrid = useDataGrid({
