@@ -5,6 +5,18 @@ This project is developed with [Node.js](https://nodejs.org), [Express.js](https
 
 ![screenshot](https://drive.google.com/uc?export=view&id=1pDyn8-gRBiU5aWGk8FvYe9S667af4y7T)
 
+## Important
+
+For testing purposes, **5 Managers** and **20 Technicians** are created initially after the app starts.
+
+You can login as a **Manager** with credentials :\
+**username:** manager01\
+**password:** manager01
+
+Or as a **Technician** with credentials :\
+**username:** technician01\
+**password:** technician01
+
 ## Run the application
 
 ### Using docker compose
@@ -43,16 +55,5 @@ To run the test of the React or Node.js application, access the app directory (c
 ```bash
   npm run test
 ```
-
-
-**Note:** for testing purposes, **5 Managers** and **20 Technicians** are created initially after the app starts.
-
-You can login as a **Manager** with credentials :\
-**username:** manager01\
-**password:** manager01
-
-Or as a **Technician** with credentials :\
-**username:** technician01\
-**password:** technician01
 
 
