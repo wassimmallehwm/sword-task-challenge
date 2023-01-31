@@ -1,3 +1,5 @@
+const { SERVER_ERROR, INVALID_DATA, REQUIRED_DATA, DUPLICATED_DATA } = require("../../constants");
+
 class ErrorsHandler {
     constructor() {
     }
@@ -7,7 +9,7 @@ class ErrorsHandler {
     handle = (err, trace = "") => {
         console.error(`${trace} => ${err}`)
         let required = false;
-        let message = 'serverError';
+        let message = SERVER_ERROR;
         let status = 500;
         if (err.name === 'ValidationError') {
             for (field in err.errors) {
@@ -15,14 +17,11 @@ class ErrorsHandler {
                     required = true;
                 }
             }
-            message = required ? 'requiredError' : 'invalidError'
+            message = required ? REQUIRED_DATA : INVALID_DATA
             status = 400;
         } else if ((err.name === 'MongoError' || err.name === 'MongoServerError') && err.code === 11000) {
-            message = 'duplicateError'
+            message = DUPLICATED_DATA
             status = 409;
-        } else if (err.name === 'SyntaxError') {
-            message = 'syntaxError'
-            status = 400;
         }
         return { status, message };
     }

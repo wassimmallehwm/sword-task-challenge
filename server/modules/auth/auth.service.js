@@ -4,6 +4,7 @@ const { ErrorsHandler } = require('../../utils');
 const { JwtService, PasswordEncoder } = require('../../security');
 const User = require("../users/user.model");
 const UserDto = require("../users/user.dto");
+const { INVALID_DATA, ACCOUNT_NOT_FOUND, INVALID_CREDENTIALS } = require("../../constants");
 
 
 class AuthService {
@@ -18,7 +19,7 @@ class AuthService {
             if (!username || !password)
                 return new ResponseError({
                     status: 400,
-                    message: "Fields missing !"
+                    message: INVALID_DATA
                 })
             const filter = {
                 $or: [
@@ -31,14 +32,14 @@ class AuthService {
             if (!user)
                 return new ResponseError({
                     status: 404,
-                    message: "Account does not exist !"
+                    message: ACCOUNT_NOT_FOUND
                 })
 
             const isMatch = await PasswordEncoder.compare(password, user.password);
             if (!isMatch)
                 return new ResponseError({
                     status: 400,
-                    message: "Invalid Credentials !"
+                    message: INVALID_CREDENTIALS
                 })
 
             const response = new AuthResponse({
@@ -61,7 +62,7 @@ class AuthService {
             if (!user)
                 return new ResponseError({
                     status: 404,
-                    message: "Account does not exist !"
+                    message: ACCOUNT_NOT_FOUND
                 })
 
             const response = new AuthResponse({

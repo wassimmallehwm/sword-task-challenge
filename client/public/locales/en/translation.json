@@ -12,14 +12,14 @@
     "performedAt": "Performed at",
     "technician": "Technician",
     "actions": "Actions",
-    "notification" : "Notification",
-    "notifications" : "Notifications",
-    "titles" : {
+    "notification": "Notification",
+    "notifications": "Notifications",
+    "titles": {
         "technicians": "Technicians",
         "tasks": "Tasks",
         "confirmation": "Confirmation"
     },
-    "btns" : {
+    "btns": {
         "create": "Create",
         "edit": "Edit",
         "delete": "Delete",
@@ -28,7 +28,8 @@
         "save": "Save",
         "cancel": "Cancel",
         "confirm": "Confirm",
-        "login": "Login"
+        "login": "Login",
+        "logout": "Logout"
     },
     "createRes": "Create a new {{res}}",
     "editRes": "Edit the {{res}}",
@@ -36,15 +37,29 @@
         "save": "{{res}} created successfully",
         "delete": "{{res}} deleted successfully"
     },
+    "errors": {
+        "invalid_data": "Invalid data",
+        "required_data": "Data resuired",
+        "duplicated_data": "Duplicated data",
+        "account_not_found": "Account not found",
+        "data_not_found": "Data not found",
+        "invalid_credentials": "Invalid credentials",
+        "permission_denied": "Permission denied",
+        "not_authorized": "Not authorized",
+        "task_already_performed": "Task already performed",
+        "server_error": "Server error",
+        "token_expired": "Session expired",
+        "connection_error": "Connection error"
+    },
     "validation": {
         "required": "{{field}} is required",
         "maxLength": "{{field}} must not exceed {{max}} characters"
     },
-    "text" : {
+    "text": {
         "confirmation": "Are you sure you want to perform this action ?",
         "notification": "The technician <strong>{{user}}</strong> performed the task <strong>{{task}}</strong>, at <strong>{{date}}</strong>"
     },
-    "noData" : "No data available",
-    "loading" : "Loading",
-    "seeAll" : "See all"
+    "noData": "No data available",
+    "loading": "Loading",
+    "seeAll": "See all"
 }

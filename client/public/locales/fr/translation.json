@@ -28,13 +28,28 @@
         "save": "Enregistrer",
         "cancel": "Annuler",
         "confirm": "Confirmer",
-        "login": "S'authentifier"
+        "login": "S'authentifier",
+        "logout": "Déconnecter"
     },
     "createRes": "Créer une nouvelle {{res}}",
     "editRes": "Modifier la {{res}}",
     "success": {
         "save": "{{res}} créée avec succès",
         "delete": "{{res}} supprimée avec succès"
+    },
+    "errors": {
+        "invalid_data": "Données invalides",
+        "required_data": "Données obligatoires",
+        "duplicated_data": "Données Dupliqués",
+        "account_not_found": "Compte non trouvé",
+        "data_not_found": "Données non trouvées",
+        "invalid_credentials": "Identification invalides",
+        "permission_denied": "Permission refusée",
+        "not_authorized": "Pas autorisé",
+        "task_already_performed": "Tâche déjà effectuée",
+        "server_error": "Erreur du serveur",
+        "token_expired": "Session expirée",
+        "connection_error": "Erreur de connexion"
     },
     "validation": {
         "required": "{{field}} est obligatoire",

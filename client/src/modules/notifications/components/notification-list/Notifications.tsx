@@ -1,8 +1,9 @@
 import { NOTIFICATIONS_COUNT_DESCREASE } from '@config/const'
 import { Notification } from '@modules/notifications/models/notification'
 import { Pagination } from '@mui/material'
-import { PageTitle } from '@shared/components'
+import { PageTitle, Spinner } from '@shared/components'
 import EventsEmitter from '@utils/events'
+import { toastError } from '@utils/toast'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import NotificationsService from '../../services/notification.service'
@@ -11,10 +12,12 @@ import NotificationItem from '../notification-item/NotificationItem'
 const Notifications = () => {
     const { t } = useTranslation()
     const [list, setList] = useState<Notification[]>([])
+    const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
     const [totalPages, setTotalPages] = useState(0)
 
     const getNotifs = async () => {
+        setLoading(true)
         const { response, error, success } = await NotificationsService.list({
             page
         })
@@ -23,8 +26,9 @@ const Notifications = () => {
             setList(response.docs)
             setTotalPages(response.pages)
         } else {
-            console.error(error?.message)
+            toastError(error?.message)
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -50,24 +54,33 @@ const Notifications = () => {
     return (
         <div className='main-div'>
             <PageTitle> {t('notifications')} </PageTitle>
-            <div className='mt-8 flex flex-col gap-4'>
-                {
-                    list.map(notif => <div onClick={() => viewNotif(notif)}>
-                        <NotificationItem notif={notif} page />
-                    </div>)
-                }
-            </div>
-
             {
-                totalPages > 1 ? (
-                    <div className='flex items-center justify-end mt-8 mb-16 px-2'>
-                        <Pagination variant="outlined" shape="rounded"
-                            siblingCount={0} boundaryCount={1}
-                            count={totalPages} page={page} defaultPage={page}
-                            onChange={(e, page) => setPage(page)} />
-                    </div>
-                ) : null
+                loading ? (
+                    <Spinner />
+                ) : (
+                    <>
+                        <div className='mt-8 flex flex-col gap-4'>
+                            {
+                                list.map(notif => <div onClick={() => viewNotif(notif)}>
+                                    <NotificationItem notif={notif} page />
+                                </div>)
+                            }
+                        </div>
+
+                        {
+                            totalPages > 1 ? (
+                                <div className='flex items-center justify-end mt-8 mb-16 px-2'>
+                                    <Pagination variant="outlined" shape="rounded"
+                                        siblingCount={0} boundaryCount={1}
+                                        count={totalPages} page={page} defaultPage={page}
+                                        onChange={(e, page) => setPage(page)} />
+                                </div>
+                            ) : null
+                        }
+                    </>
+                )
             }
+
         </div>
     )
 }

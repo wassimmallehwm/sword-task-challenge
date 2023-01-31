@@ -1,5 +1,6 @@
 import { HttpRequest, HttpResponse } from "@shared/types";
 import Axios, { Method } from "axios";
+import i18next from "i18next";
 import { Config } from "../../config/Config";
 import storageService from "./storage.service";
 
@@ -114,31 +115,26 @@ export class BaseService {
         };
 
         try {
-            const request_start_at = performance.now();
             const {data} = await Axios.request<T>(options);
-            const request_end_at = performance.now();
-            const request_duration = request_end_at - request_start_at;
-            console.log("Request perf : ", apiUrl, request_duration)
             return {
                 success: true,
                 response: data,
                 error: null
             }
         } catch (error: any) {
-            console.error(error)
-            let errorMessage = error.response?.data || 'Server error';
-            if (typeof error.response?.data !== 'string') {
-                errorMessage = 'Server error';
+            let errorMessage = error.response?.data?.message || 'server_error';
+            if (typeof error.response?.data?.message !== 'string') {
+                errorMessage = 'server_error';
             }
             if (!navigator.onLine) {
-                errorMessage = "Check your internet connection"
+                errorMessage = "connection_error"
             }
             return {
                 success: false,
                 response: null,
                 error: {
                     status: error.response?.status || 500,
-                    message: errorMessage
+                    message: i18next.t(`errors.${errorMessage}`)
                 }
             }
         }

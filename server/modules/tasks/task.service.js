@@ -3,7 +3,7 @@ const { ResponseSuccess, ResponseError } = require("../../shared/response");
 const { ErrorsHandler, DataGridHandler } = require("../../utils");
 const MessageBroker = require('../../config/MessageBroker')
 const { isManager } = require("../../utils/permissions-handler/PermissionsHandler");
-const { NOTIFICATION_QUEUE } = require("../../constants");
+const { NOTIFICATION_QUEUE, DATA_NOT_FOUND, PERMISSION_DENIED, TASK_ALREADY_PERFORMED } = require("../../constants");
 const UserDto = require("../users/user.dto");
 const SERVICE_NAME = "TaskService"
 
@@ -24,7 +24,7 @@ class TaskService {
             )
                 return new ResponseError({
                     status: 400,
-                    message: `Invalid task data !`
+                    message: INVALID_DATA
                 })
 
             if (data.summary.length > 2500)
@@ -108,17 +108,17 @@ class TaskService {
             if (!task)
                 return new ResponseError({
                     status: 404,
-                    message: "Task not found !"
+                    message: DATA_NOT_FOUND
                 })
             if (task.createdBy != user._id)
                 return new ResponseError({
                     status: 403,
-                    message: "Permission denied !"
+                    message: PERMISSION_DENIED
                 })
             if (task.isPerformed)
                 return new ResponseError({
                     status: 400,
-                    message: "Task already performed !"
+                    message: TASK_ALREADY_PERFORMED
                 })
             const { title, summary, isPerformed, performedAt } = data
 
@@ -152,7 +152,7 @@ class TaskService {
             if (!task)
                 return new ResponseError({
                     status: 404,
-                    message: "Task not found !"
+                    message: DATA_NOT_FOUND
                 })
             const result = await Task.deleteOne({ _id: id });
 

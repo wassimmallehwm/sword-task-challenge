@@ -2,7 +2,6 @@
 const ioConfig = (io) => {
 
     io.on('connect', (socket) => {
-        console.log("User connected")
         socket.join(socket.handshake.query.role)
         
         socket.on('disconnect', () => {

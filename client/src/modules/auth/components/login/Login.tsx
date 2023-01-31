@@ -47,7 +47,7 @@ const Login = () => {
 
     return (
         <div className="bg-primary-50 px-4 h-full flex justify-center items-center">
-            <div className="max-w-md w-full mx-auto bg-white px-8 py-8 rounded-lg shadow-lg">
+            <div className="max-w-md w-full mx-auto bg-white px-8 pb-8 rounded-lg shadow-lg">
                 <div className="max-w-md w-full mx-auto flex flex-col items-center gap-4 py-2">
                     <img src={logo} className="w-32 text-center" />
                     <div className="text-2xl font-bold text-gray-800 text-center">
@@ -69,9 +69,9 @@ const Login = () => {
                         <input type="password" name="password" onChange={onChange} value={password}
                             className="w-full p-2 border border-gray-300 rounded mt-1" />
                     </div>
-                    <div className="flex flex-col justify-center w-min">
+                    {/* <div className="flex flex-col justify-center w-min">
                         <Language />
-                    </div>
+                    </div> */}
                     <div>
                         <button type="submit" disabled={loading} className={`w-full py-2 px-4 bg-primary-500 hover:bg-primary-600 
                         rounded-md text-white text-sm`}>

@@ -9,6 +9,7 @@ import { Dropdown } from '@shared/components'
 import logo from '@assets/logo.png'
 import { NotificationsIcon } from '@modules/notifications'
 import { isManager } from '@utils/roles'
+import Language from '@shared/components/Language'
 
 
 
@@ -34,7 +35,7 @@ const Navbar = ({
     const dropdownItems = [
         {
             id: 0,
-            label: 'Sign out',
+            label: t('btns.logout'),
             onAction: onLogout
         }
     ]
@@ -74,6 +75,7 @@ const Navbar = ({
                         isManager(user?.role) ?
                             <NotificationsIcon /> : null
                     }
+                    <Language />
                     <Dropdown trigger={(
                         <div className='flex items-center'>
                             <span>{user?.displayName}</span>
