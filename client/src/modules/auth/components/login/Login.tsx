@@ -51,7 +51,7 @@ const Login = () => {
                 <div className="max-w-md w-full mx-auto flex flex-col items-center gap-4 py-2">
                     <img src={logo} className="w-32 text-center" />
                     <div className="text-2xl font-bold text-gray-800 text-center">
-                        {t('app_name')} | Login
+                        {t('app_name')} | {t('btns.login')}
                     </div>
                 </div>
                 <form action="" className="space-y-6" onSubmit={onSubmit}>

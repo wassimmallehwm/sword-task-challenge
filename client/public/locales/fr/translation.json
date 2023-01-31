@@ -3,6 +3,7 @@
     "task": "tâche",
     "name": "Nom",
     "email": "Email",
+    "username": "Nom d'utilisateur",
     "password": "Mot de passe",
     "emailOrUsername": "Email ou nom d'utilisateur",
     "title": "Titre",
@@ -41,7 +42,7 @@
     },
     "text" : {
         "confirmation": "Êtes-vous sûr de vouloir effectuer cette action ?",
-        "notification": "L'utilisateur <strong>{{user}}</strong> a effectué la tâche <strong>{{task}}</strong>, le <strong>{{date}}</strong>"
+        "notification": "Le technicien <strong>{{user}}</strong> a effectué la tâche <strong>{{task}}</strong>, le <strong>{{date}}</strong>"
     },
     "noData" : "Pas de données",
     "loading" : "Chargement",

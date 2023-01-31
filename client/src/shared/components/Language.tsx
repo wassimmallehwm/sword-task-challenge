@@ -30,6 +30,12 @@ const Language = () => {
             onAction: () => i18n.changeLanguage('en')
         },
         {
+            id: 'pt',
+            label: 'Português',
+            active: selectedLang('pt'),
+            onAction: () => i18n.changeLanguage('pt')
+        },
+        {
             id: 'fr',
             label: 'Français',
             active: selectedLang('fr'),

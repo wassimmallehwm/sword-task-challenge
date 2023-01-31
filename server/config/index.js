@@ -1,5 +1,5 @@
 const createDbURL = () => {
-    const DATABASE_HOST = process.env.DATABASE_HOST || 'localhost' //'mongo'
+    const DATABASE_HOST = process.env.DATABASE_HOST || 'localhost'
     const DATABASE_PORT = process.env.DATABASE_PORT || '27017'
     const DATABASE_USERNAME = process.env.DATABASE_USERNAME || 'root'
     const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || 'root'

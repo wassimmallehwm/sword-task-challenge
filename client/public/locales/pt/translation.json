@@ -1,0 +1,50 @@
+{
+    "app_name": "Gerenciador de tarefas",
+    "task": "tarefa",
+    "name": "Nome",
+    "email": "Email",
+    "username": "Nome de usuário",
+    "password": "Senha",
+    "emailOrUsername": "Email ou nome de usuário",
+    "title": "Título",
+    "summary": "Resumo",
+    "isPerformed": "Realizada",
+    "performedAt": "Realizada em",
+    "technician": "Técnico",
+    "actions": "Ações",
+    "notification" : "Notificação",
+    "notifications" : "Notificações",
+    "titles" : {
+        "technicians": "Técnicos",
+        "tasks": "Tarefas",
+        "confirmation": "Confirmação"
+    },
+    "btns" : {
+        "create": "Crio",
+        "edit": "Editar",
+        "delete": "Excluir",
+        "close": "Feche",
+        "view": "Visualizar",
+        "save": "Salve",
+        "cancel": "Cancelar",
+        "confirm": "Confirme",
+        "login": "Conecte-se"
+    },
+    "createRes": "Criar uma nova {{res}}",
+    "editRes": "Editar a {{res}}",
+    "success": {
+        "save": "{{res}} criada com sucesso",
+        "delete": "{{res}} excluída com sucesso"
+    },
+    "validation": {
+        "required": "{{field}} é obrigatório",
+        "maxLength": "{{field}} não deve exceder {{max}} caracteres"
+    },
+    "text" : {
+        "confirmation": "Tem certeza de que deseja executar esta ação?",
+        "notification": "O técnico <strong>{{user}}</strong> executou a tarefa <strong>{{task}}</strong>, em <strong>{{date}}</strong>"
+    },
+    "noData" : "Nenhum dado disponível",
+    "loading" : "Carregando",
+    "seeAll" : "Ver tudo"
+}

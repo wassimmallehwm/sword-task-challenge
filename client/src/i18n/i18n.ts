@@ -8,7 +8,7 @@ i18n
   .use(Backend)
   .use(detector)
   .use(initReactI18next).init({
-    fallbackLng: 'fr',
+    fallbackLng: 'en',
     interpolation: {
       escapeValue: false, 
     },
