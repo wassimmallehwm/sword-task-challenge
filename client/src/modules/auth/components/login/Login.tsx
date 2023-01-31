@@ -7,25 +7,23 @@ import { SocketContext } from '@contexts/index';
 import { Account } from '@modules/users/models/Account';
 import { toastError } from '@utils/toast';
 import { useTranslation } from 'react-i18next';
-import Language from '@shared/components/Language';
+import { useForm } from "react-hook-form";
+import { yupResolver } from '@hookform/resolvers/yup';
+import validationSchema from '@modules/auth/validation/schema';
 
 const Login = () => {
     const { t } = useTranslation()
     const { login } = useContext(AuthContext)
     const { connect } = useContext(SocketContext)
     const navigate = useNavigate();
-    const [loginInfo, setLoginInfo] = useState({
-        username: 'manager01',
-        password: 'manager01'
-    })
     const [loading, setLoading] = useState(false)
+    const formOptions = { resolver: yupResolver(validationSchema) };
 
-    const { username, password } = loginInfo;
-
-    const onChange = (e: any) => {
-        const { name, value } = e.target;
-        setLoginInfo({ ...loginInfo, [name]: value })
-    }
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm(formOptions);
 
     const onLogin = (data: Account) => {
         login(data)
@@ -33,10 +31,10 @@ const Login = () => {
         navigate('/')
     }
 
-    const onSubmit = async (e: any) => {
+    const onSubmit = async (data : any, e: any) => {
         e.preventDefault();
         setLoading(true)
-        const { response, error, success } = await authService.authenticate(loginInfo)
+        const { response, error, success } = await authService.authenticate(data)
         if (success && response) {
             onLogin(response)
         } else {
@@ -54,24 +52,39 @@ const Login = () => {
                         {t('app_name')} | {t('btns.login')}
                     </div>
                 </div>
-                <form action="" className="space-y-6" onSubmit={onSubmit}>
+                <form action="" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
                         <label className="text-sm font-bold text-gray-600 block">
                             {t('emailOrUsername')}
                         </label>
-                        <input type="text" name="username" onChange={onChange} value={username}
-                            className="w-full p-2 border border-gray-300 rounded mt-1" />
+                        <input type="text" {...register('username')}
+                            className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
+                            focus:outline-none focus:ring-1 bg-white py-1 px-2 border
+                            ${errors.username ? 'border-secondary-600' : 'border-gray-300'}`} />
+                        {
+                            errors.username ?
+                                <div className="text-secondary-600">
+                                    {errors.username?.message?.toString()}
+                                </div>
+                                : null
+                        }
                     </div>
                     <div>
                         <label className="text-sm font-bold text-gray-600 block">
                             {t('password')}
                         </label>
-                        <input type="password" name="password" onChange={onChange} value={password}
-                            className="w-full p-2 border border-gray-300 rounded mt-1" />
+                        <input type="password" {...register('password')}
+                            className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
+                            focus:outline-none focus:ring-1 bg-white py-1 px-2 border
+                            ${errors.password ? 'border-secondary-600' : 'border-gray-300'}`} />
+                        {
+                            errors.password ?
+                                <div className="text-secondary-600">
+                                    {errors.password?.message?.toString()}
+                                </div>
+                                : null
+                        }
                     </div>
-                    {/* <div className="flex flex-col justify-center w-min">
-                        <Language />
-                    </div> */}
                     <div>
                         <button type="submit" disabled={loading} className={`w-full py-2 px-4 bg-primary-500 hover:bg-primary-600 
                         rounded-md text-white text-sm`}>
