@@ -54,10 +54,10 @@ const Login = () => {
                 </div>
                 <form action="" className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div>
-                        <label className="text-sm font-bold text-gray-600 block">
+                        <label htmlFor='username' className="text-sm font-bold text-gray-600 block">
                             {t('emailOrUsername')}
                         </label>
-                        <input type="text" {...register('username')}
+                        <input id="username" type="text" {...register('username')}
                             className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
                             focus:outline-none focus:ring-1 bg-white py-1 px-2 border
                             ${errors.username ? 'border-secondary-600' : 'border-gray-300'}`} />
@@ -70,10 +70,10 @@ const Login = () => {
                         }
                     </div>
                     <div>
-                        <label className="text-sm font-bold text-gray-600 block">
+                        <label htmlFor='password' className="text-sm font-bold text-gray-600 block">
                             {t('password')}
                         </label>
-                        <input type="password" {...register('password')}
+                        <input type="password" id="password" {...register('password')}
                             className={`w-full h-9 rounded mt-1 outline-hidden focus:border-primary-300 
                             focus:outline-none focus:ring-1 bg-white py-1 px-2 border
                             ${errors.password ? 'border-secondary-600' : 'border-gray-300'}`} />

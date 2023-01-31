@@ -25,4 +25,8 @@ export class Config {
         const result = menu.filter((menu: any) => menu.roles.find((elem: string) => elem == role || elem == "ALL") != undefined)
         return result
     }
+
+    public static getBaseUrl(){
+        return this.getConfig().apiUrl.split('/api')[0]
+    }
 }

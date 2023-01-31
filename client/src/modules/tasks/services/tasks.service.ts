@@ -30,7 +30,7 @@ class TasksService extends BaseService {
     }
 
     create(data: Task){
-        return this.httpClient<Page<Task>>({
+        return this.httpClient<Task>({
             apiUrl: this.httpUrl(''),
             method: "POST",
             body: data
@@ -38,7 +38,7 @@ class TasksService extends BaseService {
     }
 
     update(id: string, data: Task){
-        return this.httpClient<Page<Task>>({
+        return this.httpClient<Task>({
             apiUrl: this.httpUrl(id),
             method: "PUT",
             body: data
@@ -46,7 +46,7 @@ class TasksService extends BaseService {
     }
 
     delete(id: string){
-        return this.httpClient<Page<Task>>({
+        return this.httpClient({
             apiUrl: this.httpUrl(id),
             method: "DELETE"
         });

@@ -62,7 +62,7 @@ const Notifications = () => {
                         <div className='mt-8 flex flex-col gap-4'>
                             {
                                 list.map(notif => <div onClick={() => viewNotif(notif)}>
-                                    <NotificationItem notif={notif} page />
+                                    <NotificationItem data-testid={notif._id} notif={notif} page />
                                 </div>)
                             }
                         </div>
