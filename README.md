@@ -3,27 +3,39 @@
 
 This project is developed with [Node.js](https://nodejs.org), [Express.js](https://expressjs.com), [MongoDB](https://www.mongodb.com), [React](https://reactjs.org/), [Typescript](https://www.typescriptlang.org), [Tailwind](https://tailwindcss.com), [RabbitMq](https://www.rabbitmq.com), [Redis](https://redis.io), and containerized using [Docker - Docker compose](https://www.docker.com) and [Kubernetes](https://kubernetes.io/).
 
-## Screenshot
 ![screenshot](https://drive.google.com/uc?export=view&id=1pDyn8-gRBiU5aWGk8FvYe9S667af4y7T)
 
 ## Run the application
 
+### Using docker compose
 To run the application using docker compose, clone the repo, then run the command
 ```bash
   docker-compose up -d
 ```
+The app should be working on http://localhost or http://localhost:80.
 
-To run the application using kubernetes, clone the repo, then run the commands
+
+### Using kubernetes (Minikube)
+To run the application using kubernetes, clone the repo, then start by deploying the config and secret files by running the commands :
 ```bash
-  kubectl apply -f k8s/deployment.yml
+  kubectl apply -f k8s/config.yml
 ```
 and
-
 ```bash
-  kubectl apply -f k8s/service.yml
+  kubectl apply -f k8s/secret.yml
 ```
 
-and the app should be working on http://localhost.
+Then, in each folder of the services, run the commands :
+```bash
+  kubectl apply -f deployment.yml
+```
+and
+```bash
+  kubectl apply -f service.yml
+```
+**Note:** leave **server** and **mongo-express** for the last, they depend on other services.\
+
+The app should be working on http://[YOUR_CLUSTER_IP]:31000.
 
 ## Run tests
 
