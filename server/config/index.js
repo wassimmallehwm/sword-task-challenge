@@ -22,9 +22,10 @@ module.exports = {
     JWT_REFRESH_EXPIRATION: process.env.JWT_REFRESH_EXPIRATION || '10d',
 
     //RabbitMq config
-    CLOUDAMQP_URL: process.env.CLOUDAMQP_URL || 'amqp://localhost:5672',
+    CLOUDAMQP_URL: process.env.CLOUDAMQP_URL || 'amqp://rabbitmq:5672',
 
     //Redis config
     //cache duration : sec * min * hour
+    REDIS_URL: process.env.REDIS_URL || 'redis://@redis:6379',
     REDIS_CACHE_DURATION: 60 * 60 * 1
 }

@@ -29,13 +29,15 @@
     "nodemailer": "^6.7.5",
     "redis": "^4.6.3",
     "redis-pool": "^0.0.9",
-    "socket.io": "^4.5.1",
-    "supertest": "^6.3.3"
+    "socket.io": "^4.5.1"
   },
   "jest": {
     "testEnvironment": "node",
     "coveragePathIgnorePatterns": [
       "/node_modules/"
     ]
+  },
+  "devDependencies": {
+    "supertest": "^6.3.3"
   }
 }

@@ -5,18 +5,10 @@ import { Notification } from '../models/notification';
 class NotificationsService extends BaseService {
     SRC_URL = "notifications/";
 
-    private static instance: NotificationsService;
-
     constructor() {
         super();
     }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = new NotificationsService()
-        }
-        return this.instance
-    }
+    static instance = new NotificationsService();
 
     private httpUrl = (apiUrl: string) => {
         return `${this.SRC_URL}${apiUrl}`
@@ -50,5 +42,5 @@ class NotificationsService extends BaseService {
 
 }
 
-export default NotificationsService.getInstance();
+export default NotificationsService.instance;
 

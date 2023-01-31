@@ -5,18 +5,10 @@ import { Page } from '@shared/types';
 class UsersService extends BaseService {
     private SRC_URL = "users/";
 
-    private static instance: UsersService;
-
     constructor() {
         super();
     }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = new UsersService()
-        }
-        return this.instance
-    }
+    static instance = new UsersService();
 
     private httpUrl = (apiUrl: string) => {
         return `${this.SRC_URL}${apiUrl}`
@@ -32,5 +24,5 @@ class UsersService extends BaseService {
 
 }
 
-export default UsersService.getInstance();
+export default UsersService.instance;
 

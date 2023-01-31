@@ -5,18 +5,10 @@ import { Task } from '../models/task';
 class TasksService extends BaseService {
     private SRC_URL = "tasks/";
 
-    private static instance: TasksService;
-
     constructor() {
         super();
     }
-
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = new TasksService()
-        }
-        return this.instance
-    }
+    static instance = new TasksService();
 
     private httpUrl = (apiUrl: string) => {
         return `${this.SRC_URL}${apiUrl}`
@@ -62,5 +54,5 @@ class TasksService extends BaseService {
 
 }
 
-export default TasksService.getInstance();
+export default TasksService.instance;
 

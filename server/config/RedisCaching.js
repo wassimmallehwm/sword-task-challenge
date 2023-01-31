@@ -1,6 +1,6 @@
 const redis = require("redis");
 //const RedisPool = require("redis-pool");
-const { REDIS_CACHE_DURATION } = require(".");
+const { REDIS_CACHE_DURATION, REDIS_URL } = require(".");
 const { ErrorsHandler } = require("../utils");
 
 class RedisCaching {
@@ -13,7 +13,9 @@ class RedisCaching {
     static instance = new RedisCaching();
 
     connect = async () => {
-        this.redisClient = redis.createClient()
+        this.redisClient = redis.createClient({
+            url: REDIS_URL
+        })
         this.redisClient.on("error", (error) => console.error(`Error : ${error}`));
         this.redisClient.on('connection', (stream) => {
             console.log('Redis connected!');

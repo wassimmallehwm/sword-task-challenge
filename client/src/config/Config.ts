@@ -5,8 +5,11 @@ export class Config {
     static host = "localhost"
     static port = "4000"
 
+    static prod_host = "server"
+    static prod_port = "4000"
+
     static prod = {
-        apiUrl: "/api/",
+        apiUrl: `${this.prod_host}:${this.prod_port}/api/`,
         publicUrl: "/public/",
         socketUrl: "/"
     };

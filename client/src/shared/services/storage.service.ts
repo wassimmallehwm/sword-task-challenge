@@ -3,17 +3,10 @@ import { Account } from "@modules/users/models/Account";
 class StorageService {
     private _USER_DATA = "userData";
 
-    private static instance: StorageService;
-
     constructor() {
     }
 
-    static getInstance() {
-        if (this.instance == null) {
-            this.instance = new StorageService()
-        }
-        return this.instance
-    }
+    static instance = new StorageService();
 
     setUserData(userData: Account){
         localStorage.setItem(this._USER_DATA, JSON.stringify(userData))
@@ -33,5 +26,5 @@ class StorageService {
 
 }
 
-export default StorageService.getInstance();
+export default StorageService.instance;
 
