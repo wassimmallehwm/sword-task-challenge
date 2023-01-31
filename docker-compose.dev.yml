@@ -1,26 +1,18 @@
 version: "3"
 services:
   server:
-    image: wassimmalleh/task-manager:1.0
-    container_name: server
-    restart: on-failure:5 
+    build: ./server
+    container_name: web
     ports:
       - 4000:4000
+    volumes:
+      - ./server:/app:ro
+      - /app/node_modules
     depends_on:
       - mongo
-      - rabbitmq
-      - redis
-  client:
-    image: wassimmalleh/task-manager-client:1.0
-    container_name: client
-    restart: on-failure:5 
-    ports:
-      - 3000:80
-    depends_on:
-      - server
   mongo:
     image: mongo
-    restart: on-failure:5 
+    restart: always
     container_name: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
@@ -32,7 +24,7 @@ services:
 
   mongo-express:
     image: mongo-express
-    restart: on-failure:5 
+    restart: always
     container_name: mongo-express
     depends_on:
       - mongo
@@ -55,7 +47,6 @@ services:
   redis:
     image: redis
     container_name: redis
-    restart: on-failure:5 
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     ports:
