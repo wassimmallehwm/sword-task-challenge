@@ -51,6 +51,39 @@ describe("Authenticate user", () => {
     });
 });
 
+describe("Authentication: invalid credentials", () => {
+    it("should return Invalid credetials : 400", async () => {
+        const res = await request(app)
+            .post('/api/auth/login')
+            .send({
+                username: "manager01",
+                password: "invalid"
+            });
+        expect(res.statusCode).toBe(400);
+    });
+});
+
+describe("Authentication: missing fields", () => {
+    it("should return missing fields : 400", async () => {
+        const res = await request(app)
+            .post('/api/auth/login');
+            expect(res.statusCode).toBe(400);
+            expect(JSON.parse(res.error.text).message).toBe("Fields missing !");
+    });
+});
+
+describe("Authentication: account not found", () => {
+    it("should return account not found : 404", async () => {
+        const res = await request(app)
+            .post('/api/auth/login')
+            .send({
+                username: "invalid",
+                password: "invalid"
+            });
+        expect(res.statusCode).toBe(404);
+    });
+});
+
 describe("Refresh jwt token", () => {
     it("should refresh jwt token", async () => {
         const res = await request(app)

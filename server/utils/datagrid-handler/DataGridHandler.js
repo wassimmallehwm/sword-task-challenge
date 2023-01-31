@@ -19,47 +19,47 @@ class DataGridHandler {
     filterHandler = (filterModel) => {
         let result = {}
         filterModel && filterModel.forEach(field => {
-            const value = field.value.replace('.displayName', '.firstname')
+            const columnField = field.columnField.replace('.displayName', '.firstname')
             switch (field.operatorValue) {
 
                 case 'contains':
-                    result[field.columnField] = {
-                        "$regex": value,
+                    result[columnField] = {
+                        "$regex": field.value,
                         "$options": "i"
                     }
                     break;
                 case 'equals':
-                    result[field.columnField] = value
+                    result[columnField] = field.value
                     break;
                 case 'startsWith':
-                    result[field.columnField] = {
-                        "$regex": `^${value}`,
+                    result[columnField] = {
+                        "$regex": `^${field.value}`,
                         "$options": "i"
                     }
                     break;
                 case 'endsWith':
-                    result[field.columnField] = {
-                        "$regex": `${value}$`,
+                    result[columnField] = {
+                        "$regex": `${field.value}$`,
                         "$options": "i"
                     }
                     break;
                 case 'is':
-                    result[field.columnField] = value
+                    result[columnField] = field.value
                     break;
                 case 'not':
-                    result[field.columnField] = { "$ne": value }
+                    result[columnField] = { "$ne": field.value }
                     break;
                 case 'after':
-                    result[field.columnField] = { "$gt": value }
+                    result[columnField] = { "$gt": field.value }
                     break;
                 case 'onOrAfter':
-                    result[field.columnField] = { "$gte": value }
+                    result[columnField] = { "$gte": field.value }
                     break;
                 case 'before':
-                    result[field.columnField] = { "$lt": value }
+                    result[columnField] = { "$lt": field.value }
                     break;
                 case 'onOrBefore':
-                    result[field.columnField] = { "$lte": value }
+                    result[columnField] = { "$lte": field.value }
                     break;
             }
         });
