@@ -57,7 +57,7 @@ const Tasks = () => {
         showLoading()
         const { error, success } = await TasksService.save(task._id, val)
         if (success) {
-            toastSuccess(t('succes.save', { res: t('task') }))
+            toastSuccess(t('success.save', { res: t('task') }))
             getTasks()
             formModal.closeModal()
         } else {

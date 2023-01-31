@@ -1,7 +1,7 @@
 version: "3"
 services:
   server:
-    image: wassimmalleh/task-manager:1.0
+    image: wassimmalleh/task-manager:2.0
     container_name: server
     restart: on-failure:5 
     ports:
@@ -11,7 +11,7 @@ services:
       - rabbitmq
       - redis
   client:
-    image: wassimmalleh/task-manager-client:1.0
+    image: wassimmalleh/task-manager-client:2.1
     container_name: client
     restart: on-failure:5 
     ports:
