@@ -6,11 +6,12 @@ const path = require('path');
 const fs = require('fs');
 const { ACCESS_TOKEN, REFRESH_TOKEN } = require('../constants');
 const RedisCaching = require('../config/RedisCaching');
+const { ORIGIN_ALLOWED } = require('../config');
 
 const expressMiddelwares = (app, dir) => {
   app.use('/public', express.static(path.join(dir, 'public')));
   app.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ORIGIN_ALLOWED,
     credentials: true,
     allowedHeaders: [
       "content-type",

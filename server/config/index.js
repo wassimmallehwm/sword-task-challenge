@@ -15,7 +15,11 @@ module.exports = {
 
     //DATABASE config
     DATABASE_URL: createDbURL() || 'mongodb://root:root@mongo:27017/tasks',
-    
+
+    ORIGIN_ALLOWED: process.env.ORIGIN_ALLOWED ?
+        process.env.ORIGIN_ALLOWED.split(',') :
+        ['http://localhost:3000', 'http://client:80'],
+
     //JWT config
     JWT_SECRET: process.env.JWT_SECRET || '$2a$10$.6vrQSA.tIpm.C1thlZ8fOKrnJ6RzHNdcdWNXPEeio0QZxrO241zW',
     JWT_ACCESS_EXPIRATION: process.env.JWT_ACCESS_EXPIRATION || '600s',
